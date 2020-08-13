@@ -1,5 +1,6 @@
 import React from 'react';
-import {  View,StyleSheet,Dimensions,Image,Text,Alert,TouchableHighlight} from 'react-native';
+import {  ScrollView, View,StyleSheet,Dimensions,Image,Text} from 'react-native';
+import { WebView } from 'react-native-webview';
 import {Header,Icon} from 'react-native-elements'
 import Swiper from 'react-native-swiper';
 import { createDrawerNavigator} from 'react-navigation-drawer'
@@ -12,15 +13,27 @@ class  TopicPage extends React.Component {
     super(props);
   }
 
-  //to the best of my knowledge, up until react native v0.61.4
-  //there is no built in way to automaticaly set an image's heigth
-  //based on its resized width. Hence the need of this function
-  getImageStyle(imgSource) {
+  //function to resize the image
+  //it is broken. FOr some reason, "Image.getSize" work when called from the 
+  //"render" method, but not on this case
+  //also i'm too lazy to find out why
+  getImageStyle(imgUrl) {
 
-    h = Image.resolveAssetSource(imgSource).height
-    w = Image.resolveAssetSource(imgSource).width
+    let h = 100
+    let w = 100
+
+    Image.getSize(imgUrl, (width, height) => {
+      
+      h = height
+      w = width
+
+    }, (error) => {
+      console.log(`Couldn't get the image size: ${error.message}`);
+    });
+
+    console.log("h: " + h + " | w: " + w)
  
-    newHeigth = (h*(Dimensions.get('window').width*0.7))/w
+    let newHeigth = (h*(Dimensions.get('window').width*0.7))/w
 
     return {
       borderColor: "#FFCB64",
@@ -35,20 +48,48 @@ class  TopicPage extends React.Component {
 
   getMiddleContent() {
 
-    temp = []
+    let temp = []
 
-    if(this.props.pageContent.text)
-      temp.push(<Text style={styles.textInfo}>{this.props.pageContent.text}</Text>)
+    if(this.props.pageContent.mainTexts){
+      
+      let mains = this.props.pageContent.mainTexts
+      for(let i = 0; i < mains.length; i++)
+        temp.push(<Text style={styles.textInfo}>{mains[i].text}</Text>)
+    }
 
     if(this.props.pageContent.subTexts){
 
-      subs = this.props.pageContent.subTexts
-      for(i = 0; i < subs.length; i++)
+      let subs = this.props.pageContent.subTexts
+      for(let i = 0; i < subs.length; i++)
         temp.push(<Text style={styles.subTextInfo}>{subs[i].subText}</Text>)
     }
 
-    if(this.props.pageContent.image)
-      temp.push(<Image source={this.props.pageContent.image} style={this.getImageStyle(this.props.pageContent.image)}></Image>)
+    if(this.props.pageContent.images){
+
+      let imgs = this.props.pageContent.images
+      for(let i = 0; i < imgs.length; i++){
+        if(imgs[i].src != ''){
+          temp.push(<Image source={{uri: imgs[i].src}} style={this.getImageStyle(imgs[i].src)}></Image>)
+        }
+      }
+    }
+
+    if(this.props.pageContent.videos){
+
+      let vids = this.props.pageContent.videos
+      for(let i = 0; i < vids.length; i++)
+        if(vids[i].src != ''){
+          temp.push(
+            <WebView
+              style={styles.videoContainer}
+              javaScriptEnabled={true}
+              domStorageEnabled={true}
+              automaticallyAdjustContentInsets={true}
+              scalesPageToFit={true}
+              source={{ uri: vids[i].src }}
+            />)
+        }
+    }
 
     return temp
   }
@@ -56,18 +97,20 @@ class  TopicPage extends React.Component {
   render() {
 
     const middleContent = this.getMiddleContent();
-  
+
     return (
 
-      <View style={styles.container}>
-        
+      
+      <ScrollView style={styles.scrollContainer}>
+        <View style={styles.container}>
         <View style = {{ alignItems:"center"}}>
         <LessonHeader centerText={this.props.headerText} navigation={this.props.navigation}/>
         </View>
 
         {middleContent}
-
-      </View>
+        </View>
+      </ScrollView>
+      
     )
   }
 }
@@ -76,9 +119,7 @@ const styles = StyleSheet.create({
     container: {
         flex:1,
         width:Dimensions.get("window").width,
-        //justifyContent: 'center',
         alignItems:"center",
-        //marginTop:-20
     },
     containerProgress:{
       marginTop:5,
@@ -125,18 +166,23 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         alignItems: 'center',
     },
+    videoContainer:{ 
+      marginTop: 30,
+      marginBottom: 30, 
+      width: Dimensions.get('window').width*0.85, 
+      height: (Dimensions.get('window').width*0.85)*(9/16) 
+    },
       //moved to getImageStyle fuction
-      /*infoImage:{
-        borderColor: "#FFCB64",
-        borderWidth:3,
-        borderRadius:5,
-        marginVertical:30,
-        //maxWidth:"70%",
-        width:"70%",
-        // padding: "10%",
-        //resizeMethod:'resize',
-        resizeMode: 'contain'
-      },*/
+      // infoImage:{
+      //   borderColor: "#FFCB64",
+      //   borderWidth:3,
+      //   borderRadius:5,
+      //   marginVertical:30,
+      //   //maxWidth:"70%",
+      //   // width:"70%",
+      //   padding: "10%",
+      //   resizeMode: 'stretch'
+      // },
       textSubTitle:{
         textAlign:'center',
         fontSize:15,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View,StyleSheet,Image,Text,TouchableHighlight} from 'react-native';
+import { ScrollView,View,StyleSheet,Image,Text,TouchableHighlight,Dimensions} from 'react-native';
 import {Header,Card,Button} from 'react-native-elements'
 import { createSwitchNavigator} from 'react-navigation'
 import Modal from 'react-native-modal'
@@ -14,15 +14,16 @@ class ExercisePage extends React.Component {
     super(props);
 
     let { params } = this.props.navigation.state;
-    let questions = params ? params.questions : null;
+    let topicExercises = params ? params.topicExercises : null;
+    let topicName = params ? params.topicName : null;
 
     this.confirmAnswer = this.confirmAnswer.bind(this);
 
     this.state = {
         curQuestion: 0,
-        numOfQuestions: questions.length,
-        questions: questions,
-        correct: 1,
+        numOfQuestions: topicExercises.length,
+        topicExercises: topicExercises,
+        topicName: topicName,
         modalIsVisible:false,
         tried: []
     };
@@ -31,13 +32,13 @@ class ExercisePage extends React.Component {
 //Function that analyses if the question is correct
 confirmAnswer(btn, index)
 {
-        if(index == this.state.correct)
-            this.setState({ modalIsVisible:true})
-        else{
-            let temp = this.state.tried
-            temp.push(index)
-            this.setState({tried: temp})
-        }
+  if(index == this.state.topicExercises[this.state.curQuestion].rightAnswer)
+      this.setState({ modalIsVisible:true})
+  else{
+      let temp = this.state.tried
+      temp.push(index)
+      this.setState({tried: temp})
+  }
 }
 
 
@@ -50,20 +51,61 @@ buttonStyle(btnIndex){
     return styles.button
 }
 
+
+getImageStyle(imgUrl) {
+
+  let h = 100
+  let w = 100
+
+  Image.getSize(imgUrl, (width, height) => {
+    
+    h = height
+    w = width
+
+  }, (error) => {
+    console.log(`Couldn't get the image size: ${error.message}`);
+  });
+
+  console.log("h: " + h + " | w: " + w)
+
+  let newHeigth = (h*(Dimensions.get('window').width*0.7))/w
+
+  return {
+    borderColor: "#FFCB64",
+    borderWidth:3,
+    borderRadius:5,
+    marginVertical:10,
+    width:"70%",
+    height:newHeigth,
+    resizeMode: 'contain'
+  }
+}
+
+getQuestionImage(){
+
+  let imgUri = this.state.topicExercises[this.state.curQuestion].image
+
+  if(imgUri != null && imgUri != undefined && imgUri != ''){
+    return <Image source={{uri: imgUri}} style={this.getImageStyle(imgUri)}></Image>
+  }
+
+  return null
+}
    
  
   render() {
 
-    let answers = this.state.questions[this.state.curQuestion].exercices.map((answer, index) => {
+    let answers = this.state.topicExercises[this.state.curQuestion].answers.map((answer, index) => {
 
         let btn = <Button
-                        title={answer.subText}
+                        title={answer.answerText}
                         buttonStyle={this.buttonStyle(index)}
                         onPress={() => {this.confirmAnswer(btn, index)}}
                     />
 
-        //isso aqui em cima é pq tava dando uns bug maroto e
-        //eu n achei a resposta no stack. Therefore eu fiz a 
+        //isso aqui em cima é pq eu queria mudar a cor
+        //dos botões q o cara clicasse e tivesse errado
+        //como eu n achei a resposta no stack, eu fiz a 
         //maior gambiarra da década
 
         return (<View style = {styles.buttonContainer}>
@@ -72,16 +114,22 @@ buttonStyle(btnIndex){
                 )
     })
 
+    let questionImage = this.getQuestionImage()
+
     return (
+      <ScrollView>
         <View style={styles.container}>
 
         <View style = {{ alignItems:"center"}}>
-            <LessonHeader centerText={this.props.topicTitle} navigation={this.props.navigation}/>
+            <LessonHeader centerText={this.state.topicName} navigation={this.props.navigation}/>
         </View>
 
         <Text style={styles.textTitle} >
-            {this.state.questions[this.state.curQuestion].text}
+            {this.state.topicExercises[this.state.curQuestion].questionText}
         </Text>
+        <View style = {{ alignItems:"center"}}>
+          {questionImage}
+        </View>
         <Card containerStyle = {{margin:10}}>
             {answers}
         </Card>
@@ -109,6 +157,7 @@ buttonStyle(btnIndex){
         </View>
       </Modal>
       </View>
+      </ScrollView>
     );
   }
 }
@@ -120,6 +169,7 @@ class ExerciseFinalPage extends React.Component {
 
   render() {
     return (
+
       <View style={styles.container}>
         <Header
           backgroundColor = '#1e272e'
@@ -243,7 +293,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop:30,
-    marginBottom:40,
+    marginBottom:30,
     width:280,
     borderRadius:30,
   },

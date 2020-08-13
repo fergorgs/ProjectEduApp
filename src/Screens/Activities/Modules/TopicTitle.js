@@ -14,7 +14,7 @@ class  TopicTitle extends React.Component {
 
         <View style={styles.topicTitle}>
             <Text style={{fontSize:40, textAlign:"center"}}>
-                {this.props.topicTitle}
+                {this.props.topicName}
             </Text>
         </View>
         )

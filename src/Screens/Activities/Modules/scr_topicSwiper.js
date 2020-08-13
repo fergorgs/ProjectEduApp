@@ -72,20 +72,17 @@ class  PCM_EstimatingInputsScreen extends React.Component {
     render() {
 
     const { params } = this.props.navigation.state;
-    const topicTitle = params ? params.topicTitle : null;
-    const iconcept = params ? params.iconcept : null;
+    const topicName = params ? params.topicName : null;
+    const topicTheory = params ? params.topicTheory : null;
 
-    const temp = iconcept.map((page) => {
+    const temp = topicTheory.map((page) => {
 
-      //if(page.text)
-      return <TopicPage headerText={topicTitle} pageContent={page} navigation={this.props.navigation}></TopicPage>
-      //else
-      //return <TopicPage text={"Image place holder"}></TopicPage>
+      return <TopicPage headerText={topicName} pageContent={page} navigation={this.props.navigation}></TopicPage>
     })
 
-    const pages = [<TopicTitle topicTitle={topicTitle}></TopicTitle>]
+    const pages = [<TopicTitle topicName={topicName}></TopicTitle>]
 
-    for(i = 0; i < temp.length; i++){
+    for(let i = 0; i < temp.length; i++){
       pages.push(temp[i])
     }
 

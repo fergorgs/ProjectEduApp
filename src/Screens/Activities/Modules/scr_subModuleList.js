@@ -80,38 +80,51 @@ class scr_subModuleList extends React.Component {
   render() {
 
     const { params } = this.props.navigation.state;
-    const subTopics = params ? params.subTopics : null;
+    // const topics = null
+    const topics = params ? params.topics : null;
+    const exercises = params ? params.exercises : null;
+    const subModuleName = params ? params.subModuleName : null;
+    
 
-    let data = null
+    // console.log('topics2: ' + params.topics)
+    // console.log('exer2: ' + params.test)
 
-    if(subTopics != null){
-      data = subTopics.map((subTopic, index) => {
+    let theoryData = null
+    let exercisesData = null
 
-        let subTopicItems = []
-        if(subTopic.IConceptImpl)
-          subTopicItems.push({title: 'Theory',
+    if(topics != null){
+      theoryData = topics.map((topic, index) => {
+
+        let topicItems = []
+        if(topic.topicTheory)
+          topicItems.push({title: 'Theory',
                               id: index,
                               type: 1})
-        if(subTopic.exercise)
-          subTopicItems.push({title: 'Activities',
+        if(topic.topicExercises)
+          topicItems.push({title: 'Activities',
                               id: index,
                               type: 2})
 
-        if(subTopicItems.length == 0)
-          subTopicItems.push({title: 'No content yet',
+        if(topicItems.length == 0)
+          topicItems.push({title: 'No content yet',
                               id: index,
                               type: 3})
 
-        return ({title: subTopic.concept, 
+        return ({title: topic.topicName, 
                 type: 0,
-                items: subTopicItems,
+                items: topicItems,
         })
       })
     }
-   
-    //original data array for reference, if needed
+
+    if(exercises != null){
+      exercisesData = [{title: 'Activities'}]
+    }
     
-    /*const data = [{title: '✓  Introduction', 
+   
+    //original theoryData array for reference, if needed
+    
+    /*const theoryData = [{title: '✓  Introduction', 
                     items: [{title: 'Introdutory video', id: 1}, 
                     {title: 'Content overall', id: 2},
                     {title: 'Activities', id: 3}]},
@@ -122,29 +135,27 @@ class scr_subModuleList extends React.Component {
                     {title: 'Outputs', id: 7},
                     {title: 'Activities', id: 8}]},
                   ]*/
-    
-    let theory
 
-    if(subTopics != null){
+    if(topics != null){
 
       theory = (<NestedListView
-        data={data}
+        data={theoryData}
         getChildrenName={(node) => 'items'}
         onNodePressed={(node) => {
 
-          // console.log("sent title: " + subTopics.concept)
+          // console.log("sent title: " + topics.concept)
           if(node.type == 1)
           {
             this.props.navigation.navigate('TopicSwiper', {
-              iconcept:subTopics[node.id].IConceptImpl,
-              topicTitle:subTopics[node.id].concept
+              topicTheory:topics[node.id].topicTheory,
+              topicName:topics[node.id].topicName
             });
           }
           else if(node.type == 2)
           {
             this.props.navigation.navigate('Exercises', {
-              questions:subTopics[node.id].exercise,
-              topicTitle:subTopics[node.id].concept
+              topicExercises:topics[node.id].topicExercises,
+              topicName:topics[node.id].topicName
             });
           }
         }}
@@ -161,6 +172,33 @@ class scr_subModuleList extends React.Component {
     else
       theory = (<Text style={styles.noNodeText}>No theory content yet for this module</Text>)
 
+//----------------------------------------------------------
+    if(exercises != null){
+      practice = (<NestedListView
+        data={exercisesData}
+        getChildrenName={(node) => 'items'}
+        onNodePressed={(node) => {
+
+          this.props.navigation.navigate('Exercises', {
+            topicExercises:exercises,
+            topicName:subModuleName + ' Activities'
+          });
+        }}
+
+        renderNode={(node, level) => (
+          <NestedRow
+            level={level}
+            style={this.selectNodeStyle(level)}
+          >
+            <Text>{node.title}</Text>
+          </NestedRow>
+        )}
+      />)
+    }
+    else
+      practice = (<Text style={styles.noNodeText}>No exercises for this module</Text>)
+
+//----------------------------------------------------------
     return (
       <ScrollView >
         <Header
@@ -170,9 +208,14 @@ class scr_subModuleList extends React.Component {
           color: '#fff',
           onPress: () => this.props.navigation.navigate("Module"),
           }}
-          centerComponent={{ text: 'Sub Module Topics', style: { color: '#fff' } }}
+          centerComponent={{ text: subModuleName + ' Topics', style: { color: '#fff' } }}
         />
         {theory}
+        <Header
+          backgroundColor = '#1e272e'
+          centerComponent={{ text: subModuleName + ' General Exercises', style: { color: '#fff' } }}
+        />
+        {practice}
       </ScrollView>
     );
   }

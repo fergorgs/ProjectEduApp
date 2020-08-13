@@ -9,14 +9,26 @@ render() {
     return (
 
             //<View></View>
-        <TouchableOpacity style={styles.card} onPress={()=> this.props.ClickEventListener(this.props.Item)}>
+        <TouchableOpacity style={styles.card} onPress={()=> this.props.ClickEventListener(this.props.item)}>
+            <Image style={styles.image} source={{uri: this.props.item.image}}/>
             <View style={styles.cardContent}>
-              <Text style={styles.name}>{this.props.Item.name}</Text>
-    <TouchableOpacity style={styles.followButtonPlay} onPress={()=> this.props.ClickEventListener(this.props.Item)}>
+              <Text style={styles.name}>{this.props.item.name}</Text>
+              <TouchableOpacity style={styles.followButtonPlay} onPress={()=> this.props.ClickEventListener(this.props.item)}>
                   <Image style={styles.imagePlay} source={{uri:"https://images.vexels.com/media/users/3/135176/isolated/preview/a6508e565d25ab01f79a35c4319e0083-jogar-bot--o---cone-plana-by-vexels.png"}}/>
               </TouchableOpacity>
             </View>
         </TouchableOpacity>
+
+        //Original code
+        // <TouchableOpacity style={styles.card} onPress={() => {this.clickEventListener(item)}}>
+            //   <Image style={styles.image} source={{uri: item.image}}/>
+            //   <View style={styles.cardContent}>
+            //     <Text style={styles.name}>{item.name}</Text>
+            //     <TouchableOpacity style={styles.followButtonPlay} onPress={()=> this.clickEventListener(item)}>
+            //         <Image style={styles.imagePlay} source={{uri:"https://images.vexels.com/media/users/3/135176/isolated/preview/a6508e565d25ab01f79a35c4319e0083-jogar-bot--o---cone-plana-by-vexels.png"}}/>
+            //     </TouchableOpacity>
+            //   </View>
+            // </TouchableOpacity>
     )
   }
 }
@@ -38,10 +50,11 @@ const styles = StyleSheet.create({
       flex:1,
     },*/
     cardContent: {
-      marginLeft:20,
       marginTop:10
     },
     image:{
+      marginLeft:10,
+      marginTop:10,
       width:90,
       height:90,
       borderRadius:45,
@@ -72,8 +85,9 @@ const styles = StyleSheet.create({
     },
   
     name:{
-      fontSize:20,
-      flex:1,
+      fontSize:15,
+      // flex:1,
+      width: '80%',
       alignSelf:'center',
       color:"#000000",
       fontWeight:'bold'

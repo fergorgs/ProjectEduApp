@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {StyleSheet,Text,ScrollView, Image,FlatList,TouchableOpacity,Dimensions,View} from 'react-native';
 import {Header} from 'react-native-elements'
 import ModuleIcon from './ModuleIcon.js'
-import {data} from './data.js'
+import {data} from './newData.js'
 
 export default class scr_ModuleList extends Component {
 
@@ -16,21 +16,26 @@ export default class scr_ModuleList extends Component {
 
   componentWillMount(){
 
-    this.setState({subModules: this.state.mainData.map((subModule, index) =>
+    this.setState({subModules: this.state.mainData.map((subModule, index) => {
     
-      obj = {
+      // console.log('outter: ' + subModule.subModuleExercises)
+      return {
         id:index,
-        name:subModule.moduleContent,
-        concepts:subModule.concepts
+        name:subModule.subModuleName,
+        topics:subModule.subModuleTopics,
+        exercises:subModule.subModuleExercises,
+        image:subModule.subModuleImage
         //navegation:"subModules"
-      }  
-    )})
+      }
+    })})
   }
   
 
   clickEventListener = (item) => {
     this.props.navigation.navigate('subModules', {
-      subTopics:item.concepts
+      subModuleName:item.name,
+      topics:item.topics,
+      exercises:item.exercises
     });
   }
 
@@ -62,7 +67,7 @@ export default class scr_ModuleList extends Component {
           }}
           renderItem={({item}) => {
           return (
-            <ModuleIcon Item={item} ClickEventListener={this.clickEventListener}/>
+            <ModuleIcon item={item} ClickEventListener={this.clickEventListener}/>
             // <TouchableOpacity style={styles.card} onPress={() => {this.clickEventListener(item)}}>
             //   <Image style={styles.image} source={{uri: item.image}}/>
             //   <View style={styles.cardContent}>

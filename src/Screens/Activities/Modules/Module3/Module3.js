@@ -107,7 +107,7 @@ export default class Module3 extends Component {
           }}
           renderItem={({item}) => {
           return (
-            <ModuleIcon Item={item} ClickEventListener={this.clickEventListener}/>
+            <ModuleIcon item={item} ClickEventListener={this.clickEventListener}/>
             // <TouchableOpacity style={styles.card} onPress={() => {this.clickEventListener(item)}}>
             //   <Image style={styles.image} source={{uri: item.image}}/>
             //   <View style={styles.cardContent}>
