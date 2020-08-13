@@ -216,7 +216,6 @@ const styles = StyleSheet.create({
     color: "#dcdcdc",
     fontSize:12,
   },
-
-});  
+}); 
 
   

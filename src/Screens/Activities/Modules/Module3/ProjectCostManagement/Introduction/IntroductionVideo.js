@@ -11,7 +11,7 @@ import {  View,
 } from 'react-native';
 import {Header,Icon} from 'react-native-elements'
 import Swiper from 'react-native-swiper'
-import LessonHeader from '../../../LessonHeader.js'
+import LessonHeader from '../../../Lessons_Components/LessonHeader.js'
 
 export default class IntroductionVideo extends React.Component {
 

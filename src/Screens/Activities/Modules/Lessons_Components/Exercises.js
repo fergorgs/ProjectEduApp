@@ -206,7 +206,7 @@ class ExerciseFinalPage extends React.Component {
         </Text>
         <View style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
           <TouchableHighlight style={[styles.endingButtonContainer, styles.activitiesButton]} 
-            onPress={() => {this.props.navigation.navigate('ListSubModule')}/*() => {this.finishSubTopic("Estimating", "EST_TypesOfCosts")}*/}>
+            onPress={() => {this.props.navigation.navigate('TopicsList')}/*() => {this.finishSubTopic("Estimating", "EST_TypesOfCosts")}*/}>
               <Text style={styles.buttonText}>Finish</Text>
           </TouchableHighlight>
         </View>

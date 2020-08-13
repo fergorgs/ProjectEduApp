@@ -4,7 +4,7 @@ import {Header} from 'react-native-elements'
 import ModuleIcon from './ModuleIcon.js'
 import {data} from './newData.js'
 
-export default class scr_ModuleList extends Component {
+export default class SubModulesList extends Component {
 
   constructor(props) {
         super(props);
@@ -18,7 +18,8 @@ export default class scr_ModuleList extends Component {
 
     this.setState({subModules: this.state.mainData.map((subModule, index) => {
     
-      // console.log('outter: ' + subModule.subModuleExercises)
+      // Pra cada submódulo, é criado um objeto
+      //esse vetor é depois reinderizado pela FlatList mais abaixo
       return {
         id:index,
         name:subModule.subModuleName,
@@ -30,9 +31,10 @@ export default class scr_ModuleList extends Component {
     })})
   }
   
-
+  //vai para a tela com a lista de tópicos, passando as informações
+  //do submódulo selecionado
   clickEventListener = (item) => {
-    this.props.navigation.navigate('subModules', {
+    this.props.navigation.navigate('Topics', {
       subModuleName:item.name,
       topics:item.topics,
       exercises:item.exercises
@@ -56,7 +58,7 @@ export default class scr_ModuleList extends Component {
             }}
             centerComponent={{ text: 'Test Module', style: { color: '#fff' } }}
         />
-        {/*Renders Module 3 List Activities with a FlatList */}
+        {/*Renders Topics with a FlatList */}
         <View style={styles.container}>
         <FlatList 
           style={styles.contentList}
@@ -68,15 +70,6 @@ export default class scr_ModuleList extends Component {
           renderItem={({item}) => {
           return (
             <ModuleIcon item={item} ClickEventListener={this.clickEventListener}/>
-            // <TouchableOpacity style={styles.card} onPress={() => {this.clickEventListener(item)}}>
-            //   <Image style={styles.image} source={{uri: item.image}}/>
-            //   <View style={styles.cardContent}>
-            //     <Text style={styles.name}>{item.name}</Text>
-            //     <TouchableOpacity style={styles.followButtonPlay} onPress={()=> this.clickEventListener(item)}>
-            //         <Image style={styles.imagePlay} source={{uri:"https://images.vexels.com/media/users/3/135176/isolated/preview/a6508e565d25ab01f79a35c4319e0083-jogar-bot--o---cone-plana-by-vexels.png"}}/>
-            //     </TouchableOpacity>
-            //   </View>
-            // </TouchableOpacity>
           )}}/>
       </View>
 

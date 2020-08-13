@@ -2,7 +2,7 @@ import React from 'react';
 import {  View,StyleSheet,TouchableHighlight,Dimensions,ScrollView,Image,Text,Alert,WebView} from 'react-native';
 import {Header,Icon} from 'react-native-elements'
 import Swiper from 'react-native-swiper';
-import LessonHeader from '../../../LessonHeader.js'
+import LessonHeader from '../../../Lessons_Components/LessonHeader.js'
 
 export default class IntroductionScroolView extends React.Component {
 

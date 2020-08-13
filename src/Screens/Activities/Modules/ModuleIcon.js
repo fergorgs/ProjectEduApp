@@ -8,7 +8,6 @@ render() {
 
     return (
 
-            //<View></View>
         <TouchableOpacity style={styles.card} onPress={()=> this.props.ClickEventListener(this.props.item)}>
             <Image style={styles.image} source={{uri: this.props.item.image}}/>
             <View style={styles.cardContent}>
@@ -19,7 +18,7 @@ render() {
             </View>
         </TouchableOpacity>
 
-        //Original code
+        //ORIGINAL CODE FOR REFERENCE
         // <TouchableOpacity style={styles.card} onPress={() => {this.clickEventListener(item)}}>
             //   <Image style={styles.image} source={{uri: item.image}}/>
             //   <View style={styles.cardContent}>
@@ -34,21 +33,6 @@ render() {
 }
 
 const styles = StyleSheet.create({
-    /*logoImage:{
-      width: 200,
-      height: 200
-    },*/
-    /*containerLogo:{
-      alignItems:"center",
-      margin: 10,
-    },*/
-    /*container:{
-      flex:1,
-      backgroundColor:"#636e72"
-    },*/
-    /*contentList:{
-      flex:1,
-    },*/
     cardContent: {
       marginTop:10
     },
@@ -92,25 +76,6 @@ const styles = StyleSheet.create({
       color:"#000000",
       fontWeight:'bold'
     },
-    /*count:{
-      fontSize:14,
-      flex:1,
-      alignSelf:'center',
-      color:"#6666ff"
-    },*/
-    /*followButton: {
-      marginTop:10,
-      height:35,
-      width:100,
-      padding:10,
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius:30,
-      backgroundColor: "white",
-      borderWidth:1,
-      borderColor:"#dcdcdc",
-    },*/
     followButtonPlay: {
       marginTop:10,
       marginBottom: 10,
@@ -122,10 +87,6 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       backgroundColor: "white",
     },
-    /*followButtonText:{
-      color: "#dcdcdc",
-      fontSize:12,
-    },*/
   
   });
 

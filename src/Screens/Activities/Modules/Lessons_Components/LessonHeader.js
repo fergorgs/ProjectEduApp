@@ -22,7 +22,7 @@ render() {
                   onPress: () => console.log('Cancel Pressed'),
                   style: 'cancel',
                 },
-                {text: 'OK', onPress:  () => this.props.navigation.navigate("ListSubModule")},
+                {text: 'OK', onPress:  () => this.props.navigation.navigate("TopicsList")},
               ],
               {cancelable: false},
             ),

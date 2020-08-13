@@ -1,18 +1,18 @@
 import { createStackNavigator} from 'react-navigation-stack';
-import ListSubModuleScreen from './scr_subModuleList';
-import topicSwiperScreen from './scr_topicSwiper';
-import ExercisesScreen from './Exercises'
+import TopicsListScreen from './TopicsList';
+import TopicSwiperScreen from './TopicSwiper';
+import ExercisesScreen from './Lessons_Components/Exercises'
 
 export default createStackNavigator({
   
-  ListSubModule: {
-    screen: ListSubModuleScreen,
+    TopicsList: {
+    screen: TopicsListScreen,
     navigationOptions : {
-      title:"ListSubModule",
+      title:"TopicsList",
     }
   },
   TopicSwiper: {
-    screen: topicSwiperScreen,
+    screen: TopicSwiperScreen,
     navigationOptions: {
       title: "Topic Swiper"
     }
@@ -25,6 +25,6 @@ export default createStackNavigator({
   }
  },
 {
-  initialRouteName: 'ListSubModule',
+  initialRouteName: 'TopicsList',
   headerMode: 'none'
 });

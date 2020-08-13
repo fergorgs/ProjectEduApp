@@ -1,6 +1,6 @@
 import { createStackNavigator} from 'react-navigation-stack';
 import ListModule3Screen from './Module3'
-import ProjectCostManagementScreen from "./ProjectCostManagement"
+import ProjectCostManagementScreen from './ProjectCostManagement'
 import MaintenanceModule3Screen from './MaintenanceModule3'
 
 export default createStackNavigator({

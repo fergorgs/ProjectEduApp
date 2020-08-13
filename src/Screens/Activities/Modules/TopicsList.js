@@ -10,7 +10,7 @@ import * as firebase from 'firebase'
 //Detemine Budget
 //Control Costs
 
-class scr_subModuleList extends React.Component {
+class TopicsList extends React.Component {
 
   constructor(props) {
     super(props);
@@ -206,7 +206,7 @@ class scr_subModuleList extends React.Component {
           leftComponent={{
           icon: 'arrow-back',
           color: '#fff',
-          onPress: () => this.props.navigation.navigate("Module"),
+          onPress: () => this.props.navigation.navigate("SubModules"),
           }}
           centerComponent={{ text: subModuleName + ' Topics', style: { color: '#fff' } }}
         />
@@ -220,7 +220,7 @@ class scr_subModuleList extends React.Component {
     );
   }
 }
-export default scr_subModuleList;
+export default TopicsList;
 
 const styles = StyleSheet.create({
   container: {

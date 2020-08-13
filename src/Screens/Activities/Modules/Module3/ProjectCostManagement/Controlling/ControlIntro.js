@@ -3,7 +3,7 @@ import {  View,StyleSheet,Dimensions,Image,Text,Alert,TouchableHighlight} from '
 import {Header,Icon} from 'react-native-elements'
 import Swiper from 'react-native-swiper';
 import { createDrawerNavigator} from 'react-navigation-drawer'
-import LessonHeader from '../../../LessonHeader.js'
+import LessonHeader from '../../../Lessons_Components/LessonHeader.js'
 import * as firebase from 'firebase'
 
 //Project Cost Management - Module Control Costs - Introduction

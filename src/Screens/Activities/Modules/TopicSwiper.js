@@ -3,10 +3,12 @@ import {  View,StyleSheet,Dimensions,Image,Text,Alert,TouchableHighlight} from '
 import {Header,Icon} from 'react-native-elements'
 import Swiper from 'react-native-swiper';
 import { createDrawerNavigator} from 'react-navigation-drawer'
-import LessonHeader from '../../../LessonHeader.js'
+import TopicPage from './Lessons_Components/TopicPage'
+import TopicTitle from './Lessons_Components/TopicTitle'
+import TopicEnd from './Lessons_Components/TopicEnd'
 
 //Project Cost Management - Module Estimating - Inputs
-class  scr_topicPage extends React.Component {
+class  TopicSwiper extends React.Component {
 
   finishSubTopic(mainTopic, subTopic){
 
@@ -68,11 +70,34 @@ class  scr_topicPage extends React.Component {
   }
      
     render() {
+
+    const { params } = this.props.navigation.state;
+    const topicName = params ? params.topicName : null;
+    const topicTheory = params ? params.topicTheory : null;
+
+    const temp = topicTheory.map((page) => {
+
+      return <TopicPage headerText={topicName} pageContent={page} navigation={this.props.navigation}></TopicPage>
+    })
+
+    const pages = [<TopicTitle topicName={topicName}></TopicTitle>]
+
+    for(let i = 0; i < temp.length; i++){
+      pages.push(temp[i])
+    }
+
+    pages.push(<TopicEnd navigation={this.props.navigation}></TopicEnd>)
   
     return (
-
+    //Swiper for the Screens
+    <Swiper
+        showsButtons={false} 
+        autoplay={false}
+        loop = {true}
+    >
+      {pages}
 {/*Screen with Inputs - First Screen */}
-<View style={styles.container}>
+{/* <View style={styles.container}>
         
         <View style = {{ alignItems:"center"}}>
         <LessonHeader centerText='Estimate Costs' navigation={this.props.navigation}/>
@@ -110,10 +135,10 @@ class  scr_topicPage extends React.Component {
           />
         </View>
         
-      </View>
+      </View> */}
 
       {/*Last Screen - Project Cost Management - Module Estimating - Inputs */}
-      <View style={{
+      {/* <View style={{
          flex:1,
          width:Dimensions.get("window").width,
          //justifyContent: 'center',
@@ -129,16 +154,18 @@ class  scr_topicPage extends React.Component {
               name='work'
               size = {300}
           />
-        </View>
+        </View> */}
           
           {/*Button for Project Cost Management - Module Estimating - Tools */}
-          <TouchableHighlight style={[styles.buttonContainer, styles.activitiesButton]} 
+          {/* <TouchableHighlight style={[styles.buttonContainer, styles.activitiesButton]} 
             onPress={() => {this.finishSubTopic("Estimating", "EST_Inputs")}}>
               <Text style={styles.buttonText}>Continue studying</Text>
           </TouchableHighlight>
           
-      </View>
+      </View> */}
 
+
+    </Swiper>
         )
     }
 }
@@ -225,4 +252,4 @@ const styles = StyleSheet.create({
     },
   });
   
-export default scr_topicPage
+export default TopicSwiper
