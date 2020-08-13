@@ -5,7 +5,6 @@ import Swiper from 'react-native-swiper';
 import { createDrawerNavigator} from 'react-navigation-drawer'
 import LessonHeader from './LessonHeader.js'
 
-//Project Cost Management - Module Estimating - Inputs
 class  TopicTitle extends React.Component {
      
     render() {
@@ -31,7 +30,6 @@ const styles = StyleSheet.create({
         alignItems:"center",
         textAlignVertical: "center",
         backgroundColor:"#0abde3",
-        //fontSize: 100
     }
   });
   

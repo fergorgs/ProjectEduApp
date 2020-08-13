@@ -6,46 +6,18 @@ import Swiper from 'react-native-swiper';
 import { createDrawerNavigator} from 'react-navigation-drawer'
 import LessonHeader from './LessonHeader.js'
 
-//Project Cost Management - Module Estimating - Inputs
 class  TopicPage extends React.Component {
 
   constructor(props) {
     super(props);
   }
 
-  //function to resize the image
-  //it is broken. FOr some reason, "Image.getSize" work when called from the 
-  //"render" method, but not on this case
-  //also i'm too lazy to find out why
-  getImageStyle(imgUrl) {
 
-    let h = 100
-    let w = 100
-
-    Image.getSize(imgUrl, (width, height) => {
-      
-      h = height
-      w = width
-
-    }, (error) => {
-      console.log(`Couldn't get the image size: ${error.message}`);
-    });
-
-    console.log("h: " + h + " | w: " + w)
- 
-    let newHeigth = (h*(Dimensions.get('window').width*0.7))/w
-
-    return {
-      borderColor: "#FFCB64",
-      borderWidth:3,
-      borderRadius:5,
-      marginVertical:50,
-      width:"70%",
-      height:newHeigth,
-      resizeMode: 'contain'
-    }
-  }
-
+  //Função que efetivamente gera o conteúdo da página.
+  //Para cada elemento de 'mainTexts', gera um componente <Text>.
+  //Faz o mesmo para cada elemento de 'subTexts'.
+  //Para cada elemento de 'images', gera um componente <Image>.
+  //Para cada elemento de 'videos', gera um componente <WebView>.
   getMiddleContent() {
 
     let temp = []
@@ -64,12 +36,15 @@ class  TopicPage extends React.Component {
         temp.push(<Text style={styles.subTextInfo}>{subs[i].subText}</Text>)
     }
 
+    //OBS.: o dimencionamento automático de imagens em react native é zuado.
+    //A idéia era deixar a imagem sempre com width='70%', mas ai o react
+    //não recalcula o 'height' e fica mó estranho
     if(this.props.pageContent.images){
 
       let imgs = this.props.pageContent.images
       for(let i = 0; i < imgs.length; i++){
         if(imgs[i].src != ''){
-          temp.push(<Image source={{uri: imgs[i].src}} style={this.getImageStyle(imgs[i].src)}></Image>)
+          temp.push(<Image source={{uri: imgs[i].src}} style={styles.infoImage}></Image>)
         }
       }
     }
@@ -93,24 +68,22 @@ class  TopicPage extends React.Component {
 
     return temp
   }
-     
+
+
+//RENDER---------------------------------------------
   render() {
 
     const middleContent = this.getMiddleContent();
 
     return (
-
-      
       <ScrollView style={styles.scrollContainer}>
         <View style={styles.container}>
-        <View style = {{ alignItems:"center"}}>
-        <LessonHeader centerText={this.props.headerText} navigation={this.props.navigation}/>
-        </View>
-
-        {middleContent}
+          <View style = {{ alignItems:"center"}}>
+            <LessonHeader centerText={this.props.headerText} navigation={this.props.navigation}/>
+          </View>
+          {middleContent}
         </View>
       </ScrollView>
-      
     )
   }
 }
@@ -172,17 +145,15 @@ const styles = StyleSheet.create({
       width: Dimensions.get('window').width*0.85, 
       height: (Dimensions.get('window').width*0.85)*(9/16) 
     },
-      //moved to getImageStyle fuction
-      // infoImage:{
-      //   borderColor: "#FFCB64",
-      //   borderWidth:3,
-      //   borderRadius:5,
-      //   marginVertical:30,
-      //   //maxWidth:"70%",
-      //   // width:"70%",
-      //   padding: "10%",
-      //   resizeMode: 'stretch'
-      // },
+      infoImage:{
+        borderColor: "#FFCB64",
+        borderWidth:3,
+        borderRadius:5,
+        marginVertical:30,
+        // width:"70%",
+        padding: "10%",
+        resizeMode: 'contain'
+      },
       textSubTitle:{
         textAlign:'center',
         fontSize:15,

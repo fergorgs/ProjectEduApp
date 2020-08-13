@@ -4,12 +4,6 @@ import {Header,ListItem} from 'react-native-elements'
 import NestedListView, {NestedRow} from 'react-native-nested-listview'
 import * as firebase from 'firebase'
 
-//Screen with list with the following modules for Project Cost Management
-//Introduction
-//Estimating Budget
-//Detemine Budget
-//Control Costs
-
 class TopicsList extends React.Component {
 
   constructor(props) {
@@ -20,54 +14,6 @@ class TopicsList extends React.Component {
       checkCount: 0,
     }
   }
-  
-  componentWillMount()
-  {
-    //get reference to module 3
-    let userid = firebase.auth().currentUser.uid
-    let usersRef = firebase.database().ref("/module3/Project Cost Management/" + userid );
-    usersRef.orderByChild("id").on("child_added", (data)=> {
-      
-      //get reference to each main topic in module 3
-      let subTopicRef = firebase.database().ref("/module3/Project Cost Management/" + userid + "/" + data.val().displayTitle);
-      let subTopics = [];
-
-      //to each sub topic, creates an object and adds it to the subtopics array
-      subTopicRef.orderByChild("id").on("child_added", (subData) => {
-
-        let obj = {title: subData.val().displayTitle, checkmark: subData.val().checkmark, idName: subData.val().idName};
-        //console.log("title: " + subData.val().displayTitle)
-        if(obj.title != null){
-          if(obj.checkmark)
-            obj.title = "✓  " + obj.title
-          
-            subTopics.push(obj);
-        }
-      })
-
-      //to each topic, creats an object with the array of subtopics previously created
-      let obj = {title: data.val().displayTitle, checkmark: data.val().checkmark, items: subTopics}
-      
-      if(obj.checkmark)
-            obj.title = "✓  " + obj.title
-
-      //ads the new topic to topics array (list Data)
-      let Aux = this.state.listData
-
-      Aux.push(obj)
-
-      this.setState({listData:Aux})
-    })
-
-    //console.log(this.state.listData)
-  }
-
-  componentDidUpdate(){
-
-    // if(this.props.navigation.state.params != undefined){
-    //   this.setState({subTopics: this.props.navigation.state.params.subTopics})
-    // }
-  }
 
   selectNodeStyle(level){
 
@@ -76,22 +22,21 @@ class TopicsList extends React.Component {
     else
       return styles.subNode
   }
+
   
   render() {
 
     const { params } = this.props.navigation.state;
-    // const topics = null
     const topics = params ? params.topics : null;
     const exercises = params ? params.exercises : null;
     const subModuleName = params ? params.subModuleName : null;
-    
-
-    // console.log('topics2: ' + params.topics)
-    // console.log('exer2: ' + params.test)
 
     let theoryData = null
     let exercisesData = null
 
+    //Se o submódulo contem teoria ('subModuleTopics' no array de infos),
+    //gera um array de dados para ser interpretado pelo <NestedListView>
+    //contendo os dados da parte teórica
     if(topics != null){
       theoryData = topics.map((topic, index) => {
 
@@ -117,14 +62,26 @@ class TopicsList extends React.Component {
       })
     }
 
+    //Se o submódulo contem exercícios gerais ('subModuleExercises' no array de infos)
+    //gera um array de dados para ser interpretado pelo <NestedListView>
+    //contendo os dados da parte de atividades
     if(exercises != null){
       exercisesData = [{title: 'Activities'}]
     }
     
    
-    //original theoryData array for reference, if needed
+    //Este é um exemplo de um array estático que
+    //pode ser usado na 'NestedListView'. É bom para
+    //referência, se necessário.
+    //
+    //Cada nó é representado por um objeto, que contem um 'title'.
+    //Cada objeto pode ter também quantas propriedades o dev quiser.
+    //Uma dessas propriedades pode ser usada como um array de objetos,
+    //que representam, por sua vez, nós filhos. É necessário informar
+    //o nome da propriedade que contem o array para o componente
+    //<NestedListView>, através do prop 'getChildrenName'
     
-    /*const theoryData = [{title: '✓  Introduction', 
+    let EXEMPLO_DE_ARRAY = [{title: '✓  Introduction', 
                     items: [{title: 'Introdutory video', id: 1}, 
                     {title: 'Content overall', id: 2},
                     {title: 'Activities', id: 3}]},
@@ -134,8 +91,13 @@ class TopicsList extends React.Component {
                     {title: 'Tools and Techniques', id: 6},
                     {title: 'Outputs', id: 7},
                     {title: 'Activities', id: 8}]},
-                  ]*/
+                  ]
 
+
+    //Se o submódulo contem teoria ('subModuleTopics' no array de infos),
+    //a variavel 'theory' recebe uma <NestedListView> com os dados extraidos
+    //de 'theoryData'.
+    //Se não, 'theory' recebe um <Text> dizendo que não há dados
     if(topics != null){
 
       theory = (<NestedListView
@@ -143,7 +105,8 @@ class TopicsList extends React.Component {
         getChildrenName={(node) => 'items'}
         onNodePressed={(node) => {
 
-          // console.log("sent title: " + topics.concept)
+          //Se o subtopico clicado é do tipo 'Theory', vai para a tela
+          //de teoria
           if(node.type == 1)
           {
             this.props.navigation.navigate('TopicSwiper', {
@@ -151,6 +114,8 @@ class TopicsList extends React.Component {
               topicName:topics[node.id].topicName
             });
           }
+          //Se o subtopico clicado é do tipo 'Activities', vai para a tela
+          //de atividades
           else if(node.type == 2)
           {
             this.props.navigation.navigate('Exercises', {
@@ -172,7 +137,12 @@ class TopicsList extends React.Component {
     else
       theory = (<Text style={styles.noNodeText}>No theory content yet for this module</Text>)
 
-//----------------------------------------------------------
+
+
+    //Se o submódulo contem exercícios gerais ('subModuleExercises' no array de infos)
+    //a variavel 'exercises' recebe uma <NestedListView> com os dados extraidos
+    //de 'exercisesData'.
+    //Se não, 'exercises' recebe um <Text> dizendo que não há dados
     if(exercises != null){
       practice = (<NestedListView
         data={exercisesData}
@@ -198,7 +168,9 @@ class TopicsList extends React.Component {
     else
       practice = (<Text style={styles.noNodeText}>No exercises for this module</Text>)
 
-//----------------------------------------------------------
+
+
+//RENDER------------------------------------------------------
     return (
       <ScrollView >
         <Header

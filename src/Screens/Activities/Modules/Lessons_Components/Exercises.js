@@ -7,7 +7,14 @@ import * as firebase from 'firebase'
 import moment from 'moment'
 import LessonHeader from './LessonHeader.js'
 
-//Question 1
+//Este arquivo contem duas telas, uma tela de perguntas e a tela final da
+//área de exercícios
+
+//Por conta de como foi implementado, cada tela só é carregada uma vez, 
+//e a tela de perguntas é reinderizada cada vez que o usuário responde
+//uma questão
+
+//TELA DE PERGUNTAS
 class ExercisePage extends React.Component {
 
   constructor(props) {
@@ -18,19 +25,24 @@ class ExercisePage extends React.Component {
     let topicName = params ? params.topicName : null;
 
     this.confirmAnswer = this.confirmAnswer.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this)
 
     this.state = {
-        curQuestion: 0,
-        numOfQuestions: topicExercises.length,
-        topicExercises: topicExercises,
+        curQuestion: 0,                           //questão atual
+        numOfQuestions: topicExercises.length,    //numbero de questões
+        topicExercises: topicExercises,           //questões (objetos de 'topicExercises')
         topicName: topicName,
         modalIsVisible:false,
-        tried: []
+        tried: []                                 //respostas erradas já clicadas
     };
 }
 
-//Function that analyses if the question is correct
-confirmAnswer(btn, index)
+//Checa a resposta
+//Compara o indice da resposta dada com o indice da resposta certa,
+//indicado por pela propriedade 'rightAnswer' do objeto questão
+//Se está correta, exibe a mensagem de resposta correta
+//Se não, add a resposta ao vetor de respostas erradas ja clicadas
+confirmAnswer(index)
 {
   if(index == this.state.topicExercises[this.state.curQuestion].rightAnswer)
       this.setState({ modalIsVisible:true})
@@ -42,6 +54,25 @@ confirmAnswer(btn, index)
 }
 
 
+
+//Função que avança para a próxima questão
+//Se ainda há questões, reseta as variáveis e reinderiza a proxima questão
+//Se essa é a ultima questão, navega para a tela final da área de exercícios
+nextQuestion(){
+                
+  this.setState({modalIsVisible: false})
+  this.setState({tried: []})
+  if(this.state.curQuestion == this.state.numOfQuestions-1)
+      this.props.navigation.navigate('ExerciseFinalPage')
+  else
+      this.setState({curQuestion: this.state.curQuestion+1})
+}
+
+
+
+//retorna o style padrão em casos normais.
+//se o index da resposta clicada consta no vetor de tried answers,
+//retorna o style de botão vermelho
 buttonStyle(btnIndex){
 
     for(let t = 0; t < this.state.tried.length; t++){
@@ -52,72 +83,47 @@ buttonStyle(btnIndex){
 }
 
 
-getImageStyle(imgUrl) {
 
-  let h = 100
-  let w = 100
-
-  Image.getSize(imgUrl, (width, height) => {
-    
-    h = height
-    w = width
-
-  }, (error) => {
-    console.log(`Couldn't get the image size: ${error.message}`);
-  });
-
-  console.log("h: " + h + " | w: " + w)
-
-  let newHeigth = (h*(Dimensions.get('window').width*0.7))/w
-
-  return {
-    borderColor: "#FFCB64",
-    borderWidth:3,
-    borderRadius:5,
-    marginVertical:10,
-    width:"70%",
-    height:newHeigth,
-    resizeMode: 'contain'
-  }
-}
-
+//A decisão se um componente <Image> será ou não criado tem que ser
+//feita por uma função. Eu tentei usar uma arrow function dentro do
+//return de 'render' mas n funciono, então eu criar uma função externa msm
 getQuestionImage(){
 
   let imgUri = this.state.topicExercises[this.state.curQuestion].image
 
+  //se existe uma imagem, retorna um componente <Image>
   if(imgUri != null && imgUri != undefined && imgUri != ''){
-    return <Image source={{uri: imgUri}} style={this.getImageStyle(imgUri)}></Image>
+    return <Image source={{uri: imgUri}} style={styles.infoImage}></Image>
   }
 
+  //se não, retorna null
   return null
 }
    
  
+
+//RENDER---------------------------------------
   render() {
 
+    //gera os botões para as respostas
     let answers = this.state.topicExercises[this.state.curQuestion].answers.map((answer, index) => {
 
-        let btn = <Button
+        return (<View style = {styles.buttonContainer}>
+                    <Button
                         title={answer.answerText}
                         buttonStyle={this.buttonStyle(index)}
-                        onPress={() => {this.confirmAnswer(btn, index)}}
+                        onPress={() => {this.confirmAnswer(index)}}
                     />
-
-        //isso aqui em cima é pq eu queria mudar a cor
-        //dos botões q o cara clicasse e tivesse errado
-        //como eu n achei a resposta no stack, eu fiz a 
-        //maior gambiarra da década
-
-        return (<View style = {styles.buttonContainer}>
-                    {btn}
                 </View>
                 )
     })
 
+    //define se existe uma imagem na pergunta
     let questionImage = this.getQuestionImage()
 
     return (
       <ScrollView>
+        {/* PERGUNTA, IMAGENS E RESPOSTAS */}
         <View style={styles.container}>
 
         <View style = {{ alignItems:"center"}}>
@@ -134,7 +140,7 @@ getQuestionImage(){
             {answers}
         </Card>
       
-      {/*Modal - Right Answer */}
+      {/* MENSAGEM DE RESPOSTA CERTA */}
       <Modal isVisible={this.state.modalIsVisible}>
         <View style={styles.modalContainer}>
           <Image
@@ -142,15 +148,7 @@ getQuestionImage(){
               source={{uri: 'https://independenthomeschool.com/wp-content/uploads/2016/06/mark-35780_960_720-e1464322717381.png'}}
           />
           <Button
-            onPress = {() => {
-                
-                this.setState({modalIsVisible: false})
-                this.setState({tried: []})
-                if(this.state.curQuestion == this.state.numOfQuestions-1)
-                    this.props.navigation.navigate('ExerciseFinalPage')
-                else
-                    this.setState({curQuestion: this.state.curQuestion+1})
-            }}
+            onPress = {this.nextQuestion}
             buttonStyle={{borderRadius: 20, marginLeft: 20, marginRight: 20, marginTop:25 }}
             title='Next question' 
           />
@@ -163,8 +161,10 @@ getQuestionImage(){
 }
 
 
-
-//Final Screen - Shows user reward for finishing the module
+//-------------------------------------------------
+//-------------------------------------------------
+//----TELA FINAL-----------------------------------
+//-------------------------------------------------
 class ExerciseFinalPage extends React.Component {
 
   render() {
@@ -206,7 +206,7 @@ class ExerciseFinalPage extends React.Component {
         </Text>
         <View style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
           <TouchableHighlight style={[styles.endingButtonContainer, styles.activitiesButton]} 
-            onPress={() => {this.props.navigation.navigate('TopicsList')}/*() => {this.finishSubTopic("Estimating", "EST_TypesOfCosts")}*/}>
+            onPress={() => {this.props.navigation.navigate('TopicsList')}}>
               <Text style={styles.buttonText}>Finish</Text>
           </TouchableHighlight>
         </View>
@@ -244,8 +244,11 @@ const styles = StyleSheet.create({
       alignItems: 'center',
   },
     infoImage:{
-        width: 150, 
-        height: 100
+      borderColor: "#FFCB64",
+      borderWidth:3,
+      borderRadius:5,
+      marginVertical:10,
+      resizeMode: 'contain'
     },
     textSubTitle:{
       textAlign:'center',
@@ -307,9 +310,7 @@ const styles = StyleSheet.create({
 export default createSwitchNavigator(
   {
     ExercisePage:   ExercisePage,
-    // PCM_DetermineBudgetActivity2:   PCM_DetermineBudgetActivity2Screen,
     ExerciseFinalPage:       ExerciseFinalPage
-
   },
   {
     headerMode: 'none'
