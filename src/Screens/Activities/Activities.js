@@ -44,6 +44,7 @@ class Activities extends Component {
         </Card>
         
         {/*Card Module 3*/}
+        {/*
         <Card
           title='Project Management Knowledge Areas	'
           image = {{uri:"https://visusllc.com/images/default-source/services-platforms/discovery-process.png?sfvrsn=10327ff9_6"}}>
@@ -57,6 +58,7 @@ class Activities extends Component {
             buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
             title='View now' />
         </Card>
+        */}
 
       </ScrollView>
       )

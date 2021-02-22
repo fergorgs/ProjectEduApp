@@ -10,12 +10,12 @@ export default createStackNavigator({
       title:"Activities",
     }
   },
-  Module_3: {
-    screen: Module3Screen,
-    navigationOptions : {
-      title:"Module 3",
-    }
-  },
+  //Module_3: {
+  //  screen: Module3Screen,
+  //  navigationOptions : {
+  //    title:"Module 3",
+  //  }
+  //},
   Generic_Module: {
     screen: GenericModuleScreen,
     navigationOptions : {

@@ -183,11 +183,14 @@ class TopicsList extends React.Component {
           centerComponent={{ text: subModuleName + ' Topics', style: { color: '#fff' } }}
         />
         {theory}
+        {/*
         <Header
           backgroundColor = '#1e272e'
           centerComponent={{ text: subModuleName + ' General Exercises', style: { color: '#fff' } }}
         />
         {practice}
+
+        */}
       </ScrollView>
     );
   }

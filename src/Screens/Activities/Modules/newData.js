@@ -35,6 +35,7 @@ export const data = [
                     src: 'https://www.youtube.com/embed/C0DPdy98e4c'
                 }, ],
 			}, ],
+
 			topicExercises: [
 			{
 				questionText: 'Place holder Question Text',
@@ -50,18 +51,29 @@ export const data = [
 					answerText: 'Place holder answerText',
 				}, ],
 			}, ],
-		}, ],
-		subModuleExercises: [
-		{
-            questionText: 'Place holder Question Text',
-			rightAnswer: '0',
-			image: '',
-			answers: [
+		},
+        {
+			topicName: 'Place holder Topic Name 1',
+			topicExercises: [
 			{
-                id: Math.random(),
-				answerText: 'Place holder answerText',
+				questionText: 'Place holder Question Text',
+				rightAnswer: '0',
+				image: '',
+				answers: [
+				{
+					id: Math.random(),
+					answerText: 'Place holder answerText',
+				},
+				{
+					id: Math.random(),
+					answerText: 'Place holder answerText',
+				}, ],
 			}, ],
-		}, ],
+		}, 
+        {
+			topicName: 'Place holder Topic Name 11',
+		}, 
+        ],
     }, ]
     
 export default {
