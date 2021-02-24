@@ -14,7 +14,7 @@ export default class SubModulesList extends Component {
         };
       }
 
-  componentWillMount(){
+  componentDidMount(){
 
     this.setState({subModules: this.state.mainData.map((subModule, index) => {
     
@@ -44,9 +44,9 @@ export default class SubModulesList extends Component {
     
 
   render() {
-
+    console.log(this.props.navigation.state.params)
     return (
-      <ScrollView>
+      <View>
         {/*Screen Header Information */}
         <Header
             backgroundColor = '#1e272e'
@@ -59,9 +59,9 @@ export default class SubModulesList extends Component {
             centerComponent={{ text: 'Test Module', style: { color: '#fff' } }}
         />
         {/*Renders Topics with a FlatList */}
-        <View style={styles.container}>
         <FlatList 
-          style={styles.contentList}
+          //style={styles.contentList}
+          ListFooterComponent={<View style={{ height: 20 }}></View>}
           columnWrapperStyle={styles.listContainer}
           data={this.state.subModules}
           keyExtractor= {(item) => {
@@ -71,9 +71,8 @@ export default class SubModulesList extends Component {
           return (
             <ModuleIcon item={item} ClickEventListener={this.clickEventListener}/>
           )}}/>
-      </View>
 
-      </ScrollView>
+      </View>
     );
   }
 }
