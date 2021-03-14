@@ -1,17 +1,27 @@
-import { createSwitchNavigator, createAppContainer } from 'react-navigation';
+import React, { useState } from 'react';
+import { createAppContainer } from 'react-navigation';
 import LoginScreen from './Login';
 import AppScreen from './Screens';
-import LoadingScreen from './Loading'
+import LoadingScreen from './Loading';
 
-//Switch Navigator for the 3 mains screens of the app
-//Defines the inital screen to be displayed and the app containers
-const AppNavigator = createSwitchNavigator({
-  LoginScreen,
-  AppScreen,
-  LoadingScreen
-},
-{
-  initialRouteName: 'LoadingScreen',
-});
+import * as firebase from 'firebase';
 
-export default createAppContainer(AppNavigator);
+function Switch(props) {
+    const [screen, setScreen] = useState('loading');
+    console.log(screen);
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            setScreen('app');
+        } else {
+            setScreen('login');
+        }
+    });
+
+    if (screen === 'app') return <AppScreen />;
+
+    if (screen === 'login') return <LoginScreen />;
+
+    return <LoadingScreen />;
+}
+
+export default Switch;

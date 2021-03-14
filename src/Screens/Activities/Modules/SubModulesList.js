@@ -9,9 +9,10 @@ import {
     Dimensions,
     View,
 } from 'react-native';
+
 import { Header } from 'react-native-elements';
 import ModuleIcon from './ModuleIcon.js';
-import { data } from './newData.js';
+//import { data } from './newData.js';
 
 import axios from 'axios';
 
