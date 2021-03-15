@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { Card, Button, Header } from 'react-native-elements';
 
+import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 
-function Activities(props) {
+function Activities() {
+    const navigation = useNavigation();
     const [modules, setModules] = useState(undefined);
 
     useEffect(() => {
@@ -41,11 +43,12 @@ function Activities(props) {
                     */}
                   <Button
                       type="solid"
-                      onPress={() =>
-                          props.navigation.navigate('Generic_Module', {
+                      onPress={() => {
+                          console.log('click');
+                          navigation.navigate('Generic_Module', {
                               mod: mod.id,
-                          })
-                      }
+                          });
+                      }}
                       backgroundColor="#03A9F4"
                       buttonStyle={{
                           borderRadius: 0,
@@ -66,7 +69,7 @@ function Activities(props) {
                 leftComponent={{
                     icon: 'menu',
                     color: '#fff',
-                    onPress: () => props.navigation.openDrawer(),
+                    onPress: () => navigation.openDrawer(),
                 }}
                 centerComponent={{
                     text: 'ACTIVITIES',
@@ -75,7 +78,7 @@ function Activities(props) {
                 rightComponent={{
                     icon: 'portrait',
                     color: '#fff',
-                    onPress: () => props.navigation.navigate('Perfil'),
+                    onPress: () => navigation.navigate('Perfil'),
                 }}
             />
             <ScrollView style={{ marginBottom: 80 }}>{cards}</ScrollView>

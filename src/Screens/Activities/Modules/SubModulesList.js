@@ -14,11 +14,19 @@ import { Header } from 'react-native-elements';
 import ModuleIcon from './ModuleIcon.js';
 //import { data } from './newData.js';
 
+import {
+    useNavigation,
+    useRoute,
+    useNavigationState,
+} from '@react-navigation/native';
 import axios from 'axios';
 
-function SubModulesList({ navigation }) {
+function SubModulesList() {
+    const navigation = useNavigation();
+    const route = useRoute();
     const [topics, setTopics] = useState(undefined);
-    const { mod } = navigation.state.params;
+    const { mod } = 'aaa';
+    console.log(route);
 
     useEffect(() => {
         const fetch = async () => {
