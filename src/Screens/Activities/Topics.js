@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 import { Header } from 'react-native-elements';
-import ModuleIcon from './ModuleIcon.js';
+import TopicCard from './components/TopicCard.js';
 //import { data } from './newData.js';
 
 import {
@@ -19,14 +19,15 @@ import {
     useRoute,
     useNavigationState,
 } from '@react-navigation/native';
+
 import axios from 'axios';
 
-function SubModulesList() {
+function Topics() {
     const navigation = useNavigation();
     const route = useRoute();
     const [topics, setTopics] = useState(undefined);
-    const { mod } = 'aaa';
-    console.log(route);
+
+    const { mod } = route.params;
 
     useEffect(() => {
         const fetch = async () => {
@@ -42,43 +43,18 @@ function SubModulesList() {
 
         fetch();
     }, [setTopics, axios, mod]);
-    //constructor(props) {
-    //      super(props);
-    //      this.state = {
-
-    //        mainData: data,
-    //      };
-    //    }
-
-    //componentDidMount(){
-
-    //  this.setState({subModules: this.state.mainData.map((subModule, index) => {
-    //
-    //    // Pra cada submódulo, é criado um objeto
-    //    //esse vetor é depois reinderizado pela FlatList mais abaixo
-    //    return {
-    //      id:index,
-    //      name:subModule.subModuleName,
-    //      topics:subModule.subModuleTopics,
-    //      exercises:subModule.subModuleExercises,
-    //      image:subModule.subModuleImage
-    //      //navegation:"subModules"
-    //    }
-    //  })})
-    //}
 
     //vai para a tela com a lista de tópicos, passando as informações
     //do submódulo selecionado
     const clickEventListener = (item) => {
-        navigation.navigate('Topics', {
-            subModuleName: item.name,
-            topics: item.topics,
-            exercises: item.exercises,
-        });
+        // TODO: Open Slides
+        //navigation.navigate('Topics', {
+        //    subModuleName: item.name,
+        //    topics: item.topics,
+        //    exercises: item.exercises,
+        //});
     };
 
-    //render() {
-    //  console.log(this.props.navigation.state.params)
     return (
         <View>
             {/*Screen Header Information */}
@@ -88,7 +64,7 @@ function SubModulesList() {
                 leftComponent={{
                     icon: 'arrow-back',
                     color: '#fff',
-                    onPress: () => navigation.navigate('Activities'),
+                    onPress: () => navigation.goBack(),
                 }}
                 centerComponent={{
                     text: 'Test Module',
@@ -106,7 +82,7 @@ function SubModulesList() {
                 }}
                 renderItem={({ item }) => {
                     return (
-                        <ModuleIcon
+                        <TopicCard
                             item={item}
                             ClickEventListener={clickEventListener}
                         />
@@ -115,10 +91,9 @@ function SubModulesList() {
             />
         </View>
     );
-    //}
 }
 
-export default SubModulesList;
+export default Topics;
 
 const styles = StyleSheet.create({
     logoImage: {

@@ -5,7 +5,7 @@ import { Card, Button, Header } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 
-function Activities() {
+function Modules() {
     const navigation = useNavigation();
     const [modules, setModules] = useState(undefined);
 
@@ -45,7 +45,7 @@ function Activities() {
                       type="solid"
                       onPress={() => {
                           console.log('click');
-                          navigation.navigate('Generic_Module', {
+                          navigation.navigate('Topics', {
                               mod: mod.id,
                           });
                       }}
@@ -85,4 +85,5 @@ function Activities() {
         </View>
     );
 }
-export default Activities;
+
+export default Modules;
