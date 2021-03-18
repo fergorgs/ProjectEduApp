@@ -32,7 +32,7 @@ function Topics() {
     useEffect(() => {
         const fetch = async () => {
             axios
-                .get(`http://192.168.0.35:8000/topic/${mod}`)
+                .get(`http://192.168.0.29:8000/topic/${mod}`)
                 .then((res) => {
                     setTopics(res.data);
                 })
@@ -84,7 +84,11 @@ function Topics() {
                     return (
                         <TopicCard
                             item={item}
-                            ClickEventListener={clickEventListener}
+                            OnPress={(item) =>
+                                navigation.navigate('Slides', {
+                                    topic: item.id,
+                                })
+                            }
                         />
                     );
                 }}

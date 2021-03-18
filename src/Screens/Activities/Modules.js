@@ -12,7 +12,7 @@ function Modules() {
     useEffect(() => {
         const fetch = async () => {
             axios
-                .get('http://192.168.0.35:8000/module')
+                .get('http://192.168.0.29:8000/module')
                 .then((res) => {
                     setModules(res.data);
                 })

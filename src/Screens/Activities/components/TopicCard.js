@@ -12,18 +12,15 @@ import {
 } from 'react-native';
 import { Header, Icon } from 'react-native-elements';
 
-function TopicCard({ item, ClickEventListener }) {
+function TopicCard({ item, OnPress }) {
     return (
-        <TouchableOpacity
-            style={styles.card}
-            onPress={() => ClickEventListener(item)}
-        >
+        <TouchableOpacity style={styles.card} onPress={() => OnPress(item)}>
             <Image style={styles.image} source={{ uri: item.image }} />
             <View style={styles.cardContent}>
                 <Text style={styles.name}>{item.name}</Text>
                 <TouchableOpacity
                     style={styles.followButtonPlay}
-                    onPress={() => ClickEventListener(item)}
+                    onPress={() => OnPress(item)}
                 >
                     <Image
                         style={styles.imagePlay}
