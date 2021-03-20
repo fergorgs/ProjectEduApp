@@ -7,7 +7,7 @@ import {
     FlatList,
     TouchableOpacity,
     Dimensions,
-    View,
+    View
 } from 'react-native';
 
 import { Header } from 'react-native-elements';
@@ -17,7 +17,7 @@ import TopicCard from './components/TopicCard.js';
 import {
     useNavigation,
     useRoute,
-    useNavigationState,
+    useNavigationState
 } from '@react-navigation/native';
 
 import axios from 'axios';
@@ -44,17 +44,6 @@ function Topics() {
         fetch();
     }, [setTopics, axios, mod]);
 
-    //vai para a tela com a lista de tópicos, passando as informações
-    //do submódulo selecionado
-    const clickEventListener = (item) => {
-        // TODO: Open Slides
-        //navigation.navigate('Topics', {
-        //    subModuleName: item.name,
-        //    topics: item.topics,
-        //    exercises: item.exercises,
-        //});
-    };
-
     return (
         <View>
             {/*Screen Header Information */}
@@ -64,11 +53,11 @@ function Topics() {
                 leftComponent={{
                     icon: 'arrow-back',
                     color: '#fff',
-                    onPress: () => navigation.goBack(),
+                    onPress: () => navigation.goBack()
                 }}
                 centerComponent={{
                     text: 'Test Module',
-                    style: { color: '#fff' },
+                    style: { color: '#fff' }
                 }}
             />
             {/*Renders Topics with a FlatList */}
@@ -87,6 +76,7 @@ function Topics() {
                             OnPress={(item) =>
                                 navigation.navigate('Slides', {
                                     topic: item.id,
+                                    topicName: item.name
                                 })
                             }
                         />
@@ -102,40 +92,40 @@ export default Topics;
 const styles = StyleSheet.create({
     logoImage: {
         width: 200,
-        height: 200,
+        height: 200
     },
     containerLogo: {
         alignItems: 'center',
-        margin: 10,
+        margin: 10
     },
     container: {
         flex: 1,
-        backgroundColor: '#636e72',
+        backgroundColor: '#636e72'
     },
     contentList: {
         flex: 1,
-        paddingBottom: 20,
+        paddingBottom: 20
     },
     cardContent: {
         marginLeft: 20,
-        marginTop: 10,
+        marginTop: 10
     },
     image: {
         width: 90,
         height: 90,
         borderRadius: 45,
         borderWidth: 2,
-        borderColor: '#ebf0f7',
+        borderColor: '#ebf0f7'
     },
     imagePlay: {
         width: 60,
-        height: 60,
+        height: 60
     },
     card: {
         shadowColor: '#00000021',
         shadowOffset: {
             width: 0,
-            height: 6,
+            height: 6
         },
         shadowOpacity: 0.37,
         shadowRadius: 7.49,
@@ -147,7 +137,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         padding: 10,
         flexDirection: 'row',
-        borderRadius: 30,
+        borderRadius: 30
     },
 
     name: {
@@ -155,13 +145,13 @@ const styles = StyleSheet.create({
         flex: 1,
         alignSelf: 'center',
         color: '#000000',
-        fontWeight: 'bold',
+        fontWeight: 'bold'
     },
     count: {
         fontSize: 14,
         flex: 1,
         alignSelf: 'center',
-        color: '#6666ff',
+        color: '#6666ff'
     },
     followButton: {
         marginTop: 10,
@@ -174,7 +164,7 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         backgroundColor: 'white',
         borderWidth: 1,
-        borderColor: '#dcdcdc',
+        borderColor: '#dcdcdc'
     },
     followButtonPlay: {
         marginTop: 10,
@@ -185,10 +175,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'white',
+        backgroundColor: 'white'
     },
     followButtonText: {
         color: '#dcdcdc',
-        fontSize: 12,
-    },
+        fontSize: 12
+    }
 });

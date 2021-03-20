@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     TouchableHighlight,
     ScrollView,
@@ -7,10 +7,41 @@ import {
     Dimensions,
     Text
 } from 'react-native';
+
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 
 function Slide({ type, slide, topicName }) {
     const navigation = useNavigation();
+
+    const [content, setContent] = useState(undefined);
+
+    useEffect(() => {
+        const fetch = async (path) => {
+            axios
+                .get(`http://192.168.0.29:8000/${path}/${slide}`)
+                .then((res) => {
+                    setContent(res.data);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        };
+
+        switch (type) {
+            case 'iinfo':
+                fetch('info');
+                break;
+            case 'eexpla':
+                fetch('explanation');
+                break;
+            case 'eexplo':
+                fetch('exploration');
+                break;
+            default:
+                break;
+        }
+    }, [type, axios, setContent, slide]);
 
     if (type === 'empty') {
         return (
@@ -56,6 +87,7 @@ function Slide({ type, slide, topicName }) {
         );
     }
 
+    // TODO: display content (video, image & text)
     return (
         <ScrollView>
             <View style={styles.container}>

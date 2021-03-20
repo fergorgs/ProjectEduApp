@@ -13,7 +13,7 @@ function Slides() {
 
     const [slides, setSlides] = useState(undefined);
 
-    const { topic } = route.params;
+    const { topic, topicName } = route.params;
 
     useEffect(() => {
         const fetch = async () => {
@@ -32,13 +32,15 @@ function Slides() {
 
     const content =
         slides !== undefined && slides?.length > 0
-            ? slides.map((page) => <Slide slide={page.id} type={page.type} />)
+            ? slides.map((page) => (
+                  <Slide key={page.id} slide={page.id} type={page.type} />
+              ))
             : [<Slide type="empty" />];
 
     const pages = [
-        <Slide type="begin" topicName="teste" />,
+        <Slide type="begin" key="first_slide" topicName={topicName} />,
         ...content,
-        <Slide type="end" />
+        <Slide type="end" key="last_slide" />
     ];
 
     return (

@@ -31,8 +31,8 @@ function Modules() {
                   image={{ uri: mod.image ? mod.image : 'a' }}
                   imageProps={{
                       placeholderStyle: {
-                          backgroundColor: '#03A9F4',
-                      },
+                          backgroundColor: '#03A9F4'
+                      }
                   }}
                   title={mod.name}
               >
@@ -44,9 +44,8 @@ function Modules() {
                   <Button
                       type="solid"
                       onPress={() => {
-                          console.log('click');
                           navigation.navigate('Topics', {
-                              mod: mod.id,
+                              mod: mod.id
                           });
                       }}
                       backgroundColor="#03A9F4"
@@ -54,7 +53,7 @@ function Modules() {
                           borderRadius: 0,
                           marginLeft: 0,
                           marginRight: 0,
-                          marginBottom: 0,
+                          marginBottom: 0
                       }}
                       title="View now"
                   />
@@ -69,16 +68,16 @@ function Modules() {
                 leftComponent={{
                     icon: 'menu',
                     color: '#fff',
-                    onPress: () => navigation.openDrawer(),
+                    onPress: () => navigation.openDrawer()
                 }}
                 centerComponent={{
                     text: 'ACTIVITIES',
-                    style: { color: '#fff' },
+                    style: { color: '#fff' }
                 }}
                 rightComponent={{
                     icon: 'portrait',
                     color: '#fff',
-                    onPress: () => navigation.navigate('Perfil'),
+                    onPress: () => navigation.navigate('Perfil')
                 }}
             />
             <ScrollView style={{ marginBottom: 80 }}>{cards}</ScrollView>
