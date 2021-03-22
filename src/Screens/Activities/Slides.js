@@ -35,7 +35,7 @@ function Slides() {
             ? slides.map((page) => (
                   <Slide key={page.id} slide={page.id} type={page.type} />
               ))
-            : [<Slide type="empty" />];
+            : [<Slide key="empty_slide" type="empty" />];
 
     const pages = [
         <Slide type="begin" key="first_slide" topicName={topicName} />,
