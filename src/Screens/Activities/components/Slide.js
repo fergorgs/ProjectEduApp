@@ -12,6 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 
 import Block from './Block';
+import Exercise from './Exercise';
 
 function Slide({ type, slide, topicName }) {
     const navigation = useNavigation();
@@ -91,14 +92,18 @@ function Slide({ type, slide, topicName }) {
 
     const blocks =
         content &&
-        content.map((item, index) => (
-            <Block
-                key={item.id}
-                datatype={item.datatype}
-                type={item.type}
-                content={item.value}
-            />
-        ));
+        content.map((item, index) =>
+            type !== 'eexplo' ? (
+                <Block
+                    key={item.id}
+                    datatype={item.datatype}
+                    type={item.type}
+                    content={item.value}
+                />
+            ) : (
+                <Exercise key={item.id} type={item.type} content={item} />
+            )
+        );
     // TODO: display content (video, image & text)
     return (
         <ScrollView>
