@@ -1,16 +1,13 @@
 import React from 'react';
 import SwitchNavigator from './src';
 
-import firebase from 'firebase'
-import { firebaseConfig } from './src/config';
+import firebase from 'firebase';
+import { firebaseConfig } from './secret';
 
-firebase.initializeApp(firebaseConfig)
+firebase.initializeApp(firebaseConfig);
 
 export default class App extends React.Component {
-
-  render() {
-    return (
-      <SwitchNavigator />
-    );
-  }
+    render() {
+        return <SwitchNavigator />;
+    }
 }

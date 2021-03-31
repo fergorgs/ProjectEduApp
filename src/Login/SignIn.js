@@ -9,7 +9,7 @@ import {
     Alert,
     TouchableHighlight,
     ScrollView,
-    KeyboardAvoidingView,
+    KeyboardAvoidingView
 } from 'react-native';
 import * as firebase from 'firebase';
 import moment from 'moment';
@@ -21,13 +21,13 @@ export default class SignIn extends Component {
         password: '',
         errorMessage: '',
         currentDate: new Date(),
-        isSelected: 0,
+        isSelected: 0
     };
 
     //Sets the Header to be null
     //The screen does not need a header
     static navigationOptions = {
-        header: null,
+        header: null
     };
     //Function that is responsible for the user login
     async onLogin() {
@@ -41,18 +41,18 @@ export default class SignIn extends Component {
             let userNamePath = '/users/' + userId;
 
             //Update the database on "last_logged_in"
-            firebase
-                .database()
-                .ref(userNamePath)
-                .update({
-                    last_logged_in: moment(currentDate).format(
-                        'MMMM Do YYYY, h:mm:ss a'
-                    ),
-                })
-                .catch((error) => {
-                    console.log('error ', error);
-                    Alert.alert(error.message);
-                });
+            //firebase
+            //    .database()
+            //    .ref(userNamePath)
+            //    .update({
+            //        last_logged_in: moment(currentDate).format(
+            //            'MMMM Do YYYY, h:mm:ss a'
+            //        ),
+            //    })
+            //    .catch((error) => {
+            //        console.log('error ', error);
+            //        Alert.alert(error.message);
+            //    });
             //Goes to the main screen of the app
             this.props.navigation.navigate('AppScreen');
         } catch (error) {
@@ -257,7 +257,7 @@ export default class SignIn extends Component {
                         style={{
                             color: '#e93766',
                             fontSize: 20,
-                            textAlign: 'center',
+                            textAlign: 'center'
                         }}
                     >
                         Seguir para o menu principal
@@ -271,7 +271,7 @@ export default class SignIn extends Component {
                             marginBottom: 20,
                             width: 250,
                             borderRadius: 30,
-                            backgroundColor: '#e93766',
+                            backgroundColor: '#e93766'
                         }}
                         onPress={() =>
                             this.props.navigation.navigate('AppScreen')
@@ -301,7 +301,7 @@ export default class SignIn extends Component {
                         style={[styles.icon, styles.inputIcon]}
                         source={{
                             uri:
-                                'https://png.icons8.com/envelope/androidL/40/3498db',
+                                'https://png.icons8.com/envelope/androidL/40/3498db'
                         }}
                     />
                     <TextInput
@@ -320,7 +320,7 @@ export default class SignIn extends Component {
                         style={[styles.icon, styles.inputIcon]}
                         source={{
                             uri:
-                                'https://png.icons8.com/password/androidL/40/3498db',
+                                'https://png.icons8.com/password/androidL/40/3498db'
                         }}
                     />
                     <TextInput
@@ -381,7 +381,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#686F9A',
+        backgroundColor: '#686F9A'
     },
     inputContainer: {
         borderBottomColor: '#F5FCFF',
@@ -392,21 +392,21 @@ const styles = StyleSheet.create({
         height: 45,
         marginBottom: 15,
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     inputs: {
         height: 45,
         marginLeft: 16,
         borderBottomColor: '#FFFFFF',
-        flex: 1,
+        flex: 1
     },
     icon: {
         width: 30,
-        height: 30,
+        height: 30
     },
     inputIcon: {
         marginLeft: 15,
-        justifyContent: 'center',
+        justifyContent: 'center'
     },
     buttonContainer: {
         height: 45,
@@ -415,34 +415,34 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 20,
         width: 250,
-        borderRadius: 30,
+        borderRadius: 30
     },
     loginButton: {
-        backgroundColor: '#3b5998',
+        backgroundColor: '#3b5998'
     },
     fabookButton: {
-        backgroundColor: '#3b5998',
+        backgroundColor: '#3b5998'
     },
     loginText: {
-        color: 'white',
+        color: 'white'
     },
     restoreButtonContainer: {
         width: 250,
         marginBottom: 15,
-        alignItems: 'flex-end',
+        alignItems: 'flex-end'
     },
     socialButtonContent: {
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     socialIcon: {
         color: '#FFFFFF',
-        marginRight: 5,
+        marginRight: 5
     },
     containerLoading: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
-    },
+        alignItems: 'center'
+    }
 });

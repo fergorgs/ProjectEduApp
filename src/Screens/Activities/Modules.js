@@ -1,18 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, TextInput } from 'react-native';
 import { Card, Button, Header } from 'react-native-elements';
 
 import { useNavigation } from '@react-navigation/native';
+import { useForm } from 'react-hook-form';
 import axios from 'axios';
+
+import * as firebase from 'firebase';
 
 function Modules() {
     const navigation = useNavigation();
     const [modules, setModules] = useState(undefined);
+    const [searchModules, setSearchModules] = useState(undefined);
+    const [fetching, setFetching] = useState(false);
+    const { register, handleSubmit, errors, setValue, getValues } = useForm();
 
     useEffect(() => {
         const fetch = async () => {
+            const user = firebase.auth().currentUser;
+            const token = await user?.getIdToken();
+
+            if (!token) {
+                setFetching(false);
+                return;
+            }
             axios
-                .get('http://192.168.0.29:8000/module')
+                .get('http://192.168.0.29:8000/module', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
                 .then((res) => {
                     setModules(res.data);
                 })
@@ -21,10 +38,58 @@ function Modules() {
                 });
         };
 
+        register('search');
         fetch();
-    }, [setModules, axios]);
+    }, [register, setModules, axios]);
 
-    const cards = modules?.length
+    const makeSearch = async ({ search }) => {
+        if (search === undefined || search === '') return;
+
+        setFetching(true);
+        axios
+            .get(`http://192.168.0.29:8000/module/${search}`)
+            .then((res) => {
+                console.log(res.data);
+                setSearchModules(res.data);
+                setFetching(false);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
+    const subscribe = async (module) => {
+        setFetching(true);
+        const user = firebase.auth().currentUser;
+        const token = await user?.getIdToken();
+
+        if (!token) {
+            setFetching(false);
+            return;
+        }
+
+        axios
+            .post(
+                `http://192.168.0.29:8000/module/${module}`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            )
+            .then((res) => {
+                console.log(res.data);
+                setSearchModules(undefined);
+                setModules(res.data);
+                setFetching(false);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
+    const subscribedCards = modules?.length
         ? modules.map((mod, index) => (
               <Card
                   key={mod.id}
@@ -55,12 +120,49 @@ function Modules() {
                           marginRight: 0,
                           marginBottom: 0
                       }}
-                      title="View now"
+                      title="View"
                   />
               </Card>
           ))
         : null;
 
+    const searchCards = searchModules?.length
+        ? searchModules.map((mod, index) => (
+              <Card
+                  key={mod.id}
+                  image={{ uri: mod.image ? mod.image : 'a' }}
+                  imageProps={{
+                      placeholderStyle: {
+                          backgroundColor: '#03A9F4'
+                      }
+                  }}
+                  title={mod.name}
+              >
+                  {/*
+                    <Text style={{marginBottom: 10, textAlign: 'center'}}>
+                        Generic Module Title
+                    </Text>
+                    */}
+                  <Button
+                      type="solid"
+                      //onPress={() => {
+                      //    navigation.navigate('Topics', {
+                      //        mod: mod.id
+                      //    });
+                      //}}
+                      onPress={() => subscribe(mod.id)}
+                      backgroundColor="#03A9F4"
+                      buttonStyle={{
+                          borderRadius: 0,
+                          marginLeft: 0,
+                          marginRight: 0,
+                          marginBottom: 0
+                      }}
+                      title="Subscribe"
+                  />
+              </Card>
+          ))
+        : null;
     return (
         <View>
             <Header
@@ -80,9 +182,47 @@ function Modules() {
                     onPress: () => navigation.navigate('Perfil')
                 }}
             />
-            <ScrollView style={{ marginBottom: 80 }}>{cards}</ScrollView>
+            <ScrollView style={styles.scrollBox}>
+                <View style={styles.searchView}>
+                    <TextInput
+                        defaultValue={getValues('search')}
+                        placeholder="Módulo"
+                        style={styles.singleLineInput}
+                        onChangeText={(text) => {
+                            setValue('search', text);
+                        }}
+                        //editable={answered === undefined}
+                    />
+                    <Button
+                        disabled={fetching}
+                        onPress={handleSubmit(makeSearch)}
+                        title="Go"
+                    />
+                </View>
+
+                {searchCards ? searchCards : subscribedCards}
+            </ScrollView>
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    singleLineInput: {
+        padding: 8,
+        backgroundColor: 'white',
+        //elevation: 2,
+        borderRadius: 3,
+        flexGrow: 1
+    },
+    scrollBox: {
+        marginBottom: 80
+    },
+    searchView: {
+        paddingTop: 10,
+        flexDirection: 'row',
+        alignItems: 'stretch',
+        flex: 1
+    }
+});
 
 export default Modules;
