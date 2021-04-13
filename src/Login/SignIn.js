@@ -12,7 +12,7 @@ import {
     KeyboardAvoidingView
 } from 'react-native';
 import * as firebase from 'firebase';
-import moment from 'moment';
+//import moment from 'moment';
 //import * as Facebook from 'expo-facebook';
 
 export default class SignIn extends Component {
@@ -54,7 +54,7 @@ export default class SignIn extends Component {
             //        Alert.alert(error.message);
             //    });
             //Goes to the main screen of the app
-            this.props.navigation.navigate('AppScreen');
+            //this.props.navigation.navigate('AppScreen');
         } catch (error) {
             console.log(error.toString());
             Alert.alert(error.message);
@@ -250,6 +250,8 @@ export default class SignIn extends Component {
         {
             /*Pressed the button Sign in*/
         }
+        {
+            /*
         if (this.state.isSelected === 1) {
             return (
                 <View style={styles.containerLoading}>
@@ -274,13 +276,15 @@ export default class SignIn extends Component {
                             backgroundColor: '#e93766'
                         }}
                         onPress={() =>
-                            this.props.navigation.navigate('AppScreen')
+                            //this.props.navigation.navigate('AppScreen')
                         }
                     >
                         <Text style={styles.signUpText}>Continuar</Text>
                     </TouchableHighlight>
                 </View>
             );
+        }
+        */
         }
         return (
             <KeyboardAvoidingView
