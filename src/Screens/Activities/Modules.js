@@ -93,35 +93,45 @@ function Modules() {
         ? modules.map((mod, index) => (
               <Card
                   key={mod.id}
-                  image={{ uri: mod.image ? mod.image : 'a' }}
-                  imageProps={{
-                      placeholderStyle: {
-                          backgroundColor: '#03A9F4'
-                      }
-                  }}
-                  title={mod.name}
+                  //image={{ uri: mod.image ? mod.image : 'a' }}
+                  //imageProps={{
+                  //    placeholderStyle: {
+                  //        backgroundColor: '#03A9F4'
+                  //    }
+                  //}}
               >
-                  {/*
+                  <Card.Image
+                      placeholderStyle={{ backgroundColor: '#03a9f4' }}
+                      style={styles.cardImage}
+                      source={{ uri: mod.image ? mod.image : 'a' }}
+                  >
+                      <View style={styles.titleWrapper}>
+                          <Card.Title style={styles.cardTitle}>
+                              {mod.name}
+                          </Card.Title>
+                      </View>
+                      {/*
                     <Text style={{marginBottom: 10, textAlign: 'center'}}>
                         Generic Module Title
                     </Text>
                     */}
-                  <Button
-                      type="solid"
-                      onPress={() => {
-                          navigation.navigate('Topics', {
-                              mod: mod.id
-                          });
-                      }}
-                      backgroundColor="#03A9F4"
-                      buttonStyle={{
-                          borderRadius: 0,
-                          marginLeft: 0,
-                          marginRight: 0,
-                          marginBottom: 0
-                      }}
-                      title="View"
-                  />
+                      <Button
+                          type="solid"
+                          onPress={() => {
+                              navigation.navigate('Topics', {
+                                  mod: mod.id
+                              });
+                          }}
+                          backgroundColor="#03A9F4"
+                          buttonStyle={{
+                              borderRadius: 0,
+                              marginLeft: 0,
+                              marginRight: 0,
+                              marginBottom: 0
+                          }}
+                          title="View"
+                      />
+                  </Card.Image>
               </Card>
           ))
         : null;
@@ -130,36 +140,52 @@ function Modules() {
         ? searchModules.map((mod, index) => (
               <Card
                   key={mod.id}
-                  image={{ uri: mod.image ? mod.image : 'a' }}
-                  imageProps={{
-                      placeholderStyle: {
-                          backgroundColor: '#03A9F4'
-                      }
-                  }}
-                  title={mod.name}
+                  //image={{ uri: mod.image ? mod.image : 'a' }}
+                  //imageProps={{
+                  //    placeholderStyle: {
+                  //        backgroundColor: '#03A9F4'
+                  //    }
+                  //}}
+                  //title={mod.name}
               >
                   {/*
                     <Text style={{marginBottom: 10, textAlign: 'center'}}>
                         Generic Module Title
                     </Text>
                     */}
-                  <Button
-                      type="solid"
-                      //onPress={() => {
-                      //    navigation.navigate('Topics', {
-                      //        mod: mod.id
-                      //    });
-                      //}}
-                      onPress={() => subscribe(mod.id)}
-                      backgroundColor="#03A9F4"
-                      buttonStyle={{
-                          borderRadius: 0,
-                          marginLeft: 0,
-                          marginRight: 0,
-                          marginBottom: 0
-                      }}
-                      title="Subscribe"
-                  />
+                  <Card.Image
+                      placeholderStyle={{ backgroundColor: '#03a9f4' }}
+                      style={styles.cardImage}
+                      source={{ uri: mod.image ? mod.image : 'a' }}
+                  >
+                      <View style={styles.titleWrapper}>
+                          <Card.Title style={styles.cardTitle}>
+                              {mod.name}
+                          </Card.Title>
+                      </View>
+                      {/*
+                    <Text style={{marginBottom: 10, textAlign: 'center'}}>
+                        Generic Module Title
+                    </Text>
+                    */}
+                      <Button
+                          type="solid"
+                          //onPress={() => {
+                          //    navigation.navigate('Topics', {
+                          //        mod: mod.id
+                          //    });
+                          //}}
+                          onPress={() => subscribe(mod.id)}
+                          backgroundColor="#03A9F4"
+                          buttonStyle={{
+                              borderRadius: 0,
+                              marginLeft: 0,
+                              marginRight: 0,
+                              marginBottom: 0
+                          }}
+                          title="Subscribe"
+                      />
+                  </Card.Image>
               </Card>
           ))
         : null;
@@ -222,6 +248,23 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'stretch',
         flex: 1
+    },
+    cardTitle: {
+        fontSize: 20,
+        color: 'white'
+    },
+    titleWrapper: {
+        backgroundColor: '#33333388',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1
+    },
+    cardImage: {
+        padding: 10
+    },
+    cardButton: {
+        backgroundColor: '#eae2b7'
     }
 });
 
