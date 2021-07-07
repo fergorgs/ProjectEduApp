@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     StyleSheet,
     Text,
     View,
     TextInput,
     TouchableHighlight,
+    TouchableOpacity,
     Image,
     Alert,
     TouchableWithoutFeedback,
@@ -16,62 +17,89 @@ import {
 import { ImagePicker, Notifications } from 'expo';
 //import DatePicker from 'react-native-datepicker';
 //import * as Permissions from 'expo-permissions';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { useForm } from 'react-hook-form';
+
 
 import * as firebase from 'firebase';
+import axios from 'axios';
 //import { ScrollView } from 'react-native-gesture-handler';
 
-export default class SignUp extends Component {
-    state = {
-        fullName: '',
-        email: '',
-        password: '',
-        currentDate: new Date(),
-        image:
-            'https://firebasestorage.googleapis.com/v0/b/projectedu-38e92.appspot.com/o/default.png?alt=media&token=13712cb1-7300-400f-97fe-312ec012f35f',
-        birthDate: null,
-        isSelected: 0
-    };
+export default function SignUp() {
+
+    const { register, handleSubmit, setValue, getValues, errors } = useForm();
+    const [ picking, setPicking ] = useState(false);
+    const [ birth, setBirth ] = useState(new Date());
+
+    useEffect(() => {
+        register('name');
+        register('birthday');
+        register('email');
+        register('password');
+        //setValue('birthday', birth.toLocaleDateString('pt-BR'));
+    }, [ register ]);
+    //state = {
+    //    fullName: '',
+    //    email: '',
+    //    password: '',
+    //    currentDate: new Date(),
+    //    image:
+    //        'https://firebasestorage.googleapis.com/v0/b/projectedu-38e92.appspot.com/o/default.png?alt=media&token=13712cb1-7300-400f-97fe-312ec012f35f',
+    //    birthDate: null,
+    //    isSelected: 0
+    //};
 
     //Configuring the Header of the Screen
-    static navigationOptions = {
-        title: 'Back',
-        headerStyle: {
-            backgroundColor: '#FF800'
-        },
-        headerTintColor: '#000',
-        headerTitleStyle: {
-            fontWeight: 'bold',
-            textAlign: 'left'
-        }
+    //static navigationOptions = {
+    //    title: 'Back',
+    //    headerStyle: {
+    //        backgroundColor: '#FF800'
+    //    },
+    //    headerTintColor: '#000',
+    //    headerTitleStyle: {
+    //        fontWeight: 'bold',
+    //        textAlign: 'left'
+    //    }
+    //};
+
+    const selectBirthday = (_, selected) => {
+        const curr = selected || birth;
+
+        //setShow(Platform.OS === 'ios');
+
+        setPicking(false);
+
+        setValue('birthday', curr.toLocaleDateString('pt-BR'));
+        setBirth(curr);
     };
 
     //Function responsible for creating the user and registering information on the database
-    onSignUpPress = async () => {
-        const {
-            email,
-            password,
-            fullName,
-            currentDate,
-            image,
-            birthDate
-        } = this.state;
+    const onSignUpPress = async ({ name, birthday, email, password }) => {
+        //const {
+        //    email,
+        //    password,
+        //    fullName,
+        //    currentDate,
+        //    image,
+        //    birthDate
+        //} = this.state;
 
-        this.setState({ isSelected: 1 });
+        // this.setState({ isSelected: 1 });
         try {
             await firebase
                 .auth()
-                //creates the user with email and password
+            //creates the user with email and password
                 .createUserWithEmailAndPassword(email, password)
-                .then(() => {
+                .then(async () => {
                     //update user information on firebase - Name and Email
                     firebase
                         .auth()
                         .currentUser.updateProfile({
-                            displayName: fullName,
+                            displayName: name,
                             email: email
                         })
                         .catch((error) => {
-                            this.setState({ isSelected: 0 });
+                            //this.setState({ isSelected: 0 });
                             console.log('error ', error);
                             Alert.alert(error.message);
                         });
@@ -80,15 +108,35 @@ export default class SignUp extends Component {
                     //this.registerForPushNotificationsAsync()
                     //
                     ////Registering User info
-                    //let userId = firebase.auth().currentUser.uid
-                    //firebase.database().ref("/users/" + userId).set({
-                    //  name:fullName,
-                    //  progress:0,
-                    //  points:0,
-                    //  image:image,
-                    //  birthDate:birthDate,
-                    //  created_at:moment(currentDate).format('MMMM Do YYYY, h:mm:ss a')
-                    //})
+                    const userId = firebase.auth().currentUser.uid
+                    const token = await firebase.auth().currentUser?.getIdToken();
+
+                    if (!token) {
+                        setFetching(false);
+                        return;
+                    }
+
+                    axios
+                        .post(`http://192.168.0.29:8000/user`, 
+                        {
+                            name: name,
+                            birthday: birthday
+                        },
+                        {
+                            headers: {
+                                Authorization: `Bearer ${token}`
+                            }
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        });
+                    // firebase.database().ref("users/" + userId).set({
+                    //   name:name,
+                    //   progress:0,
+                    //   points:0,
+                    //   birthday:birthday,
+                    //   created_at: (new Date()).toString()//moment(currentDate).format('MMMM Do YYYY, h:mm:ss a')
+                    // });
                     ////Registering the Leaderboards Table
                     //firebase.database().ref("/leaderbords/" + userId).set({
                     //  name:fullName,
@@ -171,76 +219,77 @@ export default class SignUp extends Component {
                     //    displayTitle:"Outputs",
                     //    checkmark:false,
                     //    idName:"BUD_Outputs"},
-                    //  BUD_Activitiess: {
-                    //    id:5,
-                    //    displayTitle:"Activities",
-                    //    checkmark:false,
+                        //  BUD_Activitiess: {
+                        //    id:5,
+                        //    displayTitle:"Activities",
+                        //    checkmark:false,
                     //    idName:"BUD_Activities"}
                     //})
                     //firebase.database().ref("/module3/Project Cost Management/" + userId + "/Controlling").set({
-                    //  id:4,
-                    //  displayTitle:"Controlling",
+                        //  id:4,
+                        //  displayTitle:"Controlling",
                     //  checkmark:false,
                     //  CON_Introduction: {
-                    //    id:1,
-                    //    displayTitle:"Introduction",
+                        //    id:1,
+                        //    displayTitle:"Introduction",
                     //    checkmark:false,
                     //    idName:"CON_Introduction"},
-                    //  CON_Inputs: {
-                    //    id:2,
+                        //  CON_Inputs: {
+                        //    id:2,
                     //    displayTitle:"Inputs",
-                    //    checkmark:false,
-                    //    idName:"CON_Inputs"},
+                        //    checkmark:false,
+                        //    idName:"CON_Inputs"},
                     //  CON_ToolsAndTechniques: {
                     //    id:3,
-                    //    displayTitle:"Tool and Techniques",
-                    //    checkmark:false,
-                    //    idName:"CON_ToolsAndTechniques"},
+                        //    displayTitle:"Tool and Techniques",
+                        //    checkmark:false,
+                        //    idName:"CON_ToolsAndTechniques"},
                     //  CON_Outputs: {
-                    //    id:4,
-                    //    displayTitle:"Outputs",
-                    //    checkmark:false,
-                    //    idName:"CON_Outputs"},
+                        //    id:4,
+                        //    displayTitle:"Outputs",
+                        //    checkmark:false,
+                        //    idName:"CON_Outputs"},
                     //  CON_Activities: {
-                    //    id:5,
-                    //    displayTitle:"Activities",
-                    //    checkmark:false,
-                    //    idName:"CON_Activities"}
+                        //    id:5,
+                        //    displayTitle:"Activities",
+                        //    checkmark:false,
+                        //    idName:"CON_Activities"}
                     //})
-                    ////Registering the Achievements for each User
+                        ////Registering the Achievements for each User
                     //firebase.database().ref("/achievements/" + userId).set({
                     //  Respect:"Unavailable",
                     //  RockstarRookie:"Unavailable",
-                    //  LimelightAward:"Unavailable",
-                    //  SpotlightAward:"Unavailable",
-                    //  HeroAward:"Unavailable",
+                        //  LimelightAward:"Unavailable",
+                        //  SpotlightAward:"Unavailable",
+                        //  HeroAward:"Unavailable",
                     //  ShiningStarAward:"Unavailable",
-                    //  SuperstarAward:"Unavailable",
-                    //  PresidentsAward:"Unavailable",
-                    //  HonorClub:"Unavailable",
-                    //  DiamondClub:"Unavailable",
+                        //  SuperstarAward:"Unavailable",
+                        //  PresidentsAward:"Unavailable",
+                        //  HonorClub:"Unavailable",
+                        //  DiamondClub:"Unavailable",
                     //  BrightBeginning:"Unavailable"
-                    //})
+                        //})
 
-                    ////Creates table Statistics on firebase
+                        ////Creates table Statistics on firebase
                     //firebase.database().ref("/statistics/" + userId+"/"+moment(new Date()).format("YYYY-MM-DD")+"/").set({
-                    //  date:moment(new Date()).format("MM-DD"),
-                    //  points:0
-                    //})
+                        //  date:moment(new Date()).format("MM-DD"),
+                        //  points:0
+                        //})
 
-                    this.setState({ isSelected: 2 });
+                        // this.setState({ isSelected: 2 });
                 });
         } catch (error) {
-            this.setState({ isSelected: 0 });
+            // this.setState({ isSelected: 0 });
             console.log(error.toString());
             Alert.alert(error.message);
         }
     };
     //Function that detects if the inputs aren't null
-    CheckTextInput = () => {
-        if (this.state.fullName != '') {
-            if (this.state.birthDate != null) {
-                this.onSignUpPress();
+    const checkTextInput = (data) => {
+        console.log(data)
+        if (data.name && data.name != '') {
+            if (data.birthday != null) {
+                onSignUpPress(data);
             } else {
                 Alert.alert('Please insert a valid birth date');
             }
@@ -249,16 +298,16 @@ export default class SignUp extends Component {
         }
     };
     //Function that selects the profile image
-    _pickImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            allowsEditing: true,
-            aspect: [4, 3]
-        });
-        console.log(result);
-        if (!result.cancelled) {
-            this.setState({ image: result.uri });
-        }
-    };
+    //_pickImage = async () => {
+    //    let result = await ImagePicker.launchImageLibraryAsync({
+    //        allowsEditing: true,
+    //        aspect: [4, 3]
+    //    });
+    //    console.log(result);
+    //    if (!result.cancelled) {
+    //        this.setState({ image: result.uri });
+    //    }
+    //};
     //Function that register each user to be able to receive Notifications
     //registerForPushNotificationsAsync = async () => {
     //    const { status: existingStatus } = await Permissions.getAsync(
@@ -355,64 +404,67 @@ export default class SignUp extends Component {
     //    }
     //};
 
-    render() {
-        //Solving sync problems
-        let { image } = this.state;
-        //Waits the user to be created
-        if (this.state.isSelected == 1) {
-            return (
-                <View style={styles.containerLoading}>
-                    <Text style={{ color: '#e93766', fontSize: 40 }}>
-                        Criando Usuário
-                    </Text>
-                    <ActivityIndicator color="#e93766" size="large" />
-                </View>
-            );
-        }
-        //Screen to continue to the main menu
-        if (this.state.isSelected == 2) {
-            return (
-                <View style={styles.containerLoading}>
-                    <Text
-                        style={{
-                            color: '#e93766',
-                            fontSize: 20,
-                            textAlign: 'center'
-                        }}
-                    >
-                        Seguir para o menu principal
-                    </Text>
-                    <TouchableHighlight
-                        style={{
-                            height: 45,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            marginTop: 30,
-                            marginBottom: 20,
-                            width: 250,
-                            borderRadius: 30,
-                            backgroundColor: '#e93766'
-                        }}
-                        onPress={() =>
-                            this.props.navigation.navigate('AppScreen')
-                        }
-                    >
-                        <Text style={styles.signUpText}>Continuar</Text>
-                    </TouchableHighlight>
-                </View>
-            );
-        }
+    //render() {
+    ////Solving sync problems
+    //let { image } = this.state;
+    ////Waits the user to be created
+    //if (this.state.isSelected == 1) {
+    //    return (
+    //        <View style={styles.containerLoading}>
+    //            <Text style={{ color: '#e93766', fontSize: 40 }}>
+    //                Criando Usuário
+    //            </Text>
+    //            <ActivityIndicator color="#e93766" size="large" />
+    //        </View>
+    //    );
+    //}
+    ////Screen to continue to the main menu
+    //if (this.state.isSelected == 2) {
+    //    return (
+    //        <View style={styles.containerLoading}>
+    //            <Text
+    //                style={{
+    //                    color: '#e93766',
+    //                    fontSize: 20,
+    //                    textAlign: 'center'
+    //                }}
+    //            >
+    //                Seguir para o menu principal
+    //            </Text>
+    //            <TouchableHighlight
+    //                style={{
+    //                    height: 45,
+    //                    justifyContent: 'center',
+    //                    alignItems: 'center',
+    //                    marginTop: 30,
+    //                    marginBottom: 20,
+    //                    width: 250,
+    //                    borderRadius: 30,
+    //                    backgroundColor: '#e93766'
+    //                }}
+    //                onPress={() =>
+    //                    this.props.navigation.navigate('AppScreen')
+    //                }
+    //            >
+    //                <Text style={styles.signUpText}>Continuar</Text>
+    //            </TouchableHighlight>
+    //        </View>
+    //    );
+    //}
 
-        //Renders the Sign Up Screen
-        return (
-            <ScrollView>
-                <KeyboardAvoidingView
-                    behavior="padding"
-                    style={styles.container}
-                >
-                    {/*Profile image container*/}
+    //Renders the Sign Up Screen
+    return (
+        <ScrollView>
+            <KeyboardAvoidingView
+                behavior="padding"
+                style={styles.container}
+            >
+                {/*Profile image container*/}
+                {/*
                     <View style={styles.inputContainerPhoto}>
-                        {/*Touchable responsible for selecting and renderng the profile image*/}
+                    */}
+                {/*Touchable responsible for selecting and renderng the profile image*/}
+                {/*
                         <TouchableWithoutFeedback onPress={this._pickImage}>
                             <Image
                                 source={{ uri: image }}
@@ -424,113 +476,108 @@ export default class SignUp extends Component {
                             Set your profile picture
                         </Text>
                     </View>
+                    */}
 
-                    {/*Text Input Name*/}
-                    <View style={styles.inputContainer}>
-                        <Image
-                            style={styles.inputIcon}
-                            source={{
-                                uri:
-                                    'https://png.icons8.com/male-user/ultraviolet/50/3498db'
-                            }}
-                        />
-                        <TextInput
-                            style={styles.inputs}
-                            placeholder="Full name"
-                            keyboardType="name-phone-pad"
-                            underlineColorAndroid="transparent"
-                            textContentType="name"
-                            onChangeText={(fullName) =>
-                                this.setState({ fullName })
-                            }
-                        />
-                    </View>
+                {/*Text Input Name*/}
+                <View style={styles.inputContainer}>
+                    <Image
+                        style={styles.inputIcon}
+                        source={{
+                            uri:
+                            'https://png.icons8.com/male-user/ultraviolet/50/3498db'
+                        }}
+                    />
+                    <TextInput
+                        style={styles.inputs}
+                        placeholder="Full name"
+                        keyboardType="name-phone-pad"
+                        underlineColorAndroid="transparent"
+                        textContentType="name"
+                        onChangeText={ text =>
+                                setValue('name', text)
+                        }
+                    />
+                </View>
 
-                    {/*Text Birthdate*/}
-                    <View style={styles.inputContainer}>
-                        {/*
-                        <DatePicker
-                            style={{ width: 200 }}
-                            date={this.state.birthDate}
-                            mode="date"
-                            placeholder="Birth Date"
-                            format="YYYY-MM-DD"
-                            minDate="1900-01-01"
-                            //maxDate={moment(new Date()).format('YYYY-MM-DD')}
-                            confirmBtnText="Confirm"
-                            cancelBtnText="Cancel"
-                            customStyles={{
-                                dateIcon: {
-                                    position: 'absolute',
-                                    left: 10,
-                                    top: 4,
-                                    marginLeft: 0
-                                },
-                                dateInput: {
-                                    marginLeft: 60
-                                }
-                            }}
-                            onDateChange={(date) => {
-                                this.setState({ birthDate: date });
-                            }}
-                        />
-                        */}
-                    </View>
-
-                    {/*Text Input email*/}
-                    <View style={styles.inputContainer}>
-                        <Image
-                            style={styles.inputIcon}
-                            source={{
-                                uri:
-                                    'https://png.icons8.com/message/ultraviolet/50/3498db'
-                            }}
-                        />
-                        <TextInput
-                            style={styles.inputs}
-                            placeholder="Email"
-                            textContentType="emailAddress"
-                            keyboardType="email-address"
-                            underlineColorAndroid="transparent"
-                            autoCapitalize="none"
-                            onChangeText={(email) => this.setState({ email })}
-                        />
-                    </View>
-
-                    {/*Text Input password*/}
-                    <View style={styles.inputContainer}>
-                        <Image
-                            style={styles.inputIcon}
-                            source={{
-                                uri:
-                                    'https://png.icons8.com/key-2/ultraviolet/50/3498db'
-                            }}
-                        />
-                        <TextInput
-                            style={styles.inputs}
-                            placeholder="Password"
-                            textContentType="password"
-                            keyboardType="default"
-                            secureTextEntry={true}
-                            underlineColorAndroid="transparent"
-                            autoCapitalize="none"
-                            onChangeText={(password) =>
-                                this.setState({ password })
-                            }
-                        />
-                    </View>
-
-                    {/*Button Sign Up*/}
-                    <TouchableHighlight
-                        style={[styles.buttonContainer, styles.signupButton]}
-                        onPress={this.CheckTextInput}
+                {/*Text Birthdate*/}
+                <View style={styles.inputContainer}>
+                    <TouchableOpacity
+                        style={styles.inputs}
+                        onPress={ () => setPicking(true) }
                     >
-                        <Text style={styles.signUpText}>Sign up</Text>
-                    </TouchableHighlight>
-                </KeyboardAvoidingView>
-            </ScrollView>
-        );
-    }
+                        <Text>
+                            Aniversário: { birth.toLocaleDateString('pt-BR') }
+                        </Text>
+                    </TouchableOpacity>
+                    { picking &&
+                    <DateTimePicker
+                        value={ birth }
+                        mode={ 'date' }
+                        onChange={ selectBirthday }
+                    />
+                    }
+                </View>
+
+                {/*Text Input email*/}
+                <View style={styles.inputContainer}>
+                    <Image
+                        style={styles.inputIcon}
+                        source={{
+                            uri:
+                            'https://png.icons8.com/message/ultraviolet/50/3498db'
+                        }}
+                    />
+                    <TextInput
+                        style={styles.inputs}
+                        placeholder="Email"
+                        textContentType="emailAddress"
+                        keyboardType="email-address"
+                        underlineColorAndroid="transparent"
+                        autoCapitalize="none"
+                        onChangeText={ text =>
+                                setValue('email', text)
+                        }
+                        //onChangeText={(email) => this.setState({ email })}
+                    />
+                </View>
+
+                {/*Text Input password*/}
+                <View style={styles.inputContainer}>
+                    <Image
+                        style={styles.inputIcon}
+                        source={{
+                            uri:
+                            'https://png.icons8.com/key-2/ultraviolet/50/3498db'
+                        }}
+                    />
+                    <TextInput
+                        style={styles.inputs}
+                        placeholder="Password"
+                        textContentType="password"
+                        keyboardType="default"
+                        secureTextEntry={true}
+                        underlineColorAndroid="transparent"
+                        autoCapitalize="none"
+                        onChangeText={ text =>
+                                setValue('password', text)
+                        }
+                        //onChangeText={(password) =>
+                        //    this.setState({ password })
+                        //}
+                    />
+                </View>
+
+                {/*Button Sign Up*/}
+                <TouchableHighlight
+                    style={[styles.buttonContainer, styles.signupButton]}
+                    onPress={handleSubmit(checkTextInput)}
+                >
+                    <Text style={styles.signUpText}>Sign up</Text>
+                </TouchableHighlight>
+            </KeyboardAvoidingView>
+        </ScrollView>
+    );
+    //}
 }
 
 const styles = StyleSheet.create({

@@ -6,7 +6,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import ActivitiesScreen from './Activities';
 //import PerfilScreen from './Perfil';
 //import RankingScreen from './Ranking';
-//import SettingsScreen from './Settings';
+import SettingsScreen from './Settings';
 //import StatisticsScreen from './Statistics';
 //import AchievementScreen from './Achievements';
 
@@ -87,6 +87,7 @@ function AppDrawer() {
                         ),
                     }}
                 />
+                */}
                 <Drawer.Screen
                     name="Settings"
                     component={SettingsScreen}
@@ -97,7 +98,6 @@ function AppDrawer() {
                         ),
                     }}
                 />
-                */}
             </Drawer.Navigator>
         </NavigationContainer>
     );

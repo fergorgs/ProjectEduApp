@@ -1,6 +1,6 @@
 import React from 'react';
 import { View,StyleSheet } from 'react-native';
-import {Header, ListItem} from 'react-native-elements'
+import { Header, ListItem } from 'react-native-elements'
 import * as firebase from 'firebase'
 
 class Settings extends React.Component {
@@ -43,7 +43,7 @@ constructor(props) {
   async OnLogout() {
     try {
         await firebase.auth().signOut()
-        .then(() => this.props.navigation.navigate('LoginScreen'))
+        //.then(() => this.props.navigation.navigate('LoginScreen'))
         console.log("Logged Out!");
     } catch (error) {
         console.log(error);
@@ -76,7 +76,7 @@ constructor(props) {
       list.map((l, i) => (
         <ListItem
           key={i}
-          title={l.title}
+          //title={l.title}
           bottomDivider = {true}
           chevron = {true}
           leftIcon={{
@@ -106,7 +106,9 @@ constructor(props) {
               }
             }).bind(this)
           }
-        />
+        >
+          <ListItem.Title>{l.title}</ListItem.Title>
+        </ListItem>
       ))
       }    
       </View>

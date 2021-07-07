@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import {StyleSheet,Text,View,Image,TouchableOpacity} from 'react-native';
-import {Header} from 'react-native-elements';
+import { Header } from 'react-native-elements';
 //import Orientation from 'react-native-orientation';
-import * as firebase from 'firebase'
+//import * as firebase from 'firebase'
 
 export default class Perfil extends Component {
 
 
-  state = {
-        name: '',
-        email:'',
-        photo:null,
-        points:'',
-        progress:'',
-        currentDate: new Date(),
-  }
+  //state = {
+  //      name: '',
+  //      email:'',
+  //      photo:null,
+  //      points:'',
+  //      progress:'',
+  //      currentDate: new Date(),
+  //}
 
 
   //Receives all the user information from the database
