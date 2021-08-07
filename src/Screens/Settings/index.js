@@ -6,7 +6,7 @@ import SettingsScreen from './Settings';
 import HelpScreen from './Help';
 import UpdateProfileScreen from './Update'
 import InfoScreen from './Info'
-//import NotificationScreen from './Notifications'
+import NotificationScreen from './Notifications'
 
 const Stack = createStackNavigator();
 
@@ -42,12 +42,10 @@ function SettingsStack() {
         name="Help"
         component={HelpScreen}
       />
-      {/*
       <Stack.Screen
         name="Notification"
         component={NotificationScreen}
       />
-      */}
       <Stack.Screen
         name="UpdateProfile"
         component={UpdateProfileScreen}
