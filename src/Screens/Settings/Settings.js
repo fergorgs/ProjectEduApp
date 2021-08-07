@@ -86,19 +86,19 @@ constructor(props) {
             (function(){
               if(l.title=="About")
               {
-                this.props.navigation.navigate("InfoScreen")
+                this.props.navigation.navigate("Info")
               }
               if(l.title=="Help")
               {
-                this.props.navigation.navigate("HelpScreen")
+                this.props.navigation.navigate("Help")
               }
               if(l.title=="Update your profile")
               {
-                this.props.navigation.navigate("UpdateProfileScreen")
+                this.props.navigation.navigate("UpdateProfile")
               }
               if(l.title=="Notifications")
               {
-                this.props.navigation.navigate("NotificationScreen")
+                this.props.navigation.navigate("Notification")
               }
               if(l.title=="Logout")
               {

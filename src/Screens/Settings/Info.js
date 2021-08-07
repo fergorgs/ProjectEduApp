@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView,StyleSheet,Text,View} from 'react-native';
-import {Card,Header} from 'react-native-elements'
+import { Card,Header } from 'react-native-elements'
 
 
 class Info extends React.Component {
@@ -38,11 +38,9 @@ class Info extends React.Component {
                 In its current version, ProjectEdu has the following main features:
             </Text>
 
-            <Card
-                title='Activities'
-                image={
-                    source={uri: 'https://cdn.lynda.com/course/145310/145310-636190593102969217-16x9.jpg'}
-                }>
+            <Card>
+                <Card.Title> Activities </Card.Title>
+                <Card.Image source={{uri: 'https://cdn.lynda.com/course/145310/145310-636190593102969217-16x9.jpg'}} />
                 <Text style={styles.cardInfo}>
                 In this area of the app, the learner has access to all the theoretical
                 content of Software Project Management and also to some related activities
@@ -51,11 +49,14 @@ class Info extends React.Component {
             
             </Card>
 
-            <Card
+            <Card>
+                {/*
                 title='Statistics'
                 image={
                     source={uri: 'https://www.siteground.com/blog/wp-content/uploads/2016/06/new-statistics.jpg'}
-                }>
+                }>*/}
+                <Card.Title>Statistics</Card.Title>
+                <Card.Image source={{uri: 'https://www.siteground.com/blog/wp-content/uploads/2016/06/new-statistics.jpg'}} />
                 <Text style={styles.cardInfo}>
                     This feature allows the learner to check his/her progress since the
                     user may access his/her score and see how much he/she has learned from
@@ -63,11 +64,14 @@ class Info extends React.Component {
                 </Text>
             </Card>
         
-            <Card
+            <Card>
+                {/*
                 title='Ranking'
                 image={
                     source={uri: 'https://thumbs.jusbr.com/imgs.jusbr.com/publications/images/083ed15e981cd6003e0ba383abf061a2'}
-                }>
+                }>*/}
+                <Card.Title>Ranking</Card.Title>
+                <Card.Image source={{uri: 'https://thumbs.jusbr.com/imgs.jusbr.com/publications/images/083ed15e981cd6003e0ba383abf061a2'}} />
                 <Text style={styles.cardInfo}>
                     This feature allows the learner to compare his/her progress with
                     others learners by participating in competitions and seeing their ranking
@@ -75,11 +79,14 @@ class Info extends React.Component {
                 </Text>
             </Card>
 
-            <Card
+            <Card>
+                {/*
                 title='Settings'
                 image={
                     source={uri: 'https://winbusinessin.com/wp-content/uploads/2015/08/settings-copy.png'}
-                }>
+                }>*/}
+                <Card.Title>Settings</Card.Title>
+                <Card.Image source={{uri: 'https://winbusinessin.com/wp-content/uploads/2015/08/settings-copy.png'}} />
                 <Text style={styles.cardInfo}>
                     This feature allows the user to set the app preferences concerning
                     notications, sounds and some system options.
