@@ -99,87 +99,88 @@ export default class Achievements extends Component {
         this.setState({isVisible:true})
       }
 
-  componentWillMount()
-  {
-    let userId = firebase.auth().currentUser.uid
-    let usersRef = firebase.database().ref("users/"+userId)
-    let achievementRef = firebase.database().ref("/achievements/"+userId)
-    usersRef.on("value", (data) => {
+  //componentWillMount()
+  //{
+  //  let userId = firebase.auth().currentUser.uid
+  //  //TODO: create endpoint to get achievement info
+  //  //let usersRef = firebase.database().ref("users/"+userId)
+  //  //let achievementRef = firebase.database().ref("/achievements/"+userId)
+  //  //usersRef.on("value", (data) => {
 
-      //Defining the status of each achievement according to the user point.
-      let points = data.val().points
-      if(points>=500)
-      {
-        achievementRef.update({
-          LimelightAward:"Completed"
-        })
-      }
-      if(points>=1000)
-      {
-        achievementRef.update({
-          SpotlightAward:"Completed"
-        })
-      }
-      if(points>=1500)
-      {
-        achievementRef.update({
-          HeroAward:"Completed"
-        })
-      }
-      if(points>=2000)
-      {
-        achievementRef.update({
-          ShiningStarAward:"Completed"
-        })
-      }
-      if(points>=3000)
-      {
-        achievementRef.update({
-          SuperstarAward:"Completed"
-        })
-      }
-      if(points>=4000)
-      {
-        achievementRef.update({
-          PresidentsAward:"Completed"
-        })
-      }
-      if(points>=10000)
-      {
-        achievementRef.update({
-          HonorClub:"Completed"
-        })
-      }
-      if(points>=20000)
-      {
-        achievementRef.update({
-          DiamondClub:"Completed"
-        })
-      }
-      });
-  }
-  com
+  //  //  //Defining the status of each achievement according to the user point.
+  //  //  let points = data.val().points
+  //  //  if(points>=500)
+  //  //  {
+  //  //    achievementRef.update({
+  //  //      LimelightAward:"Completed"
+  //  //    })
+  //  //  }
+  //  //  if(points>=1000)
+  //  //  {
+  //  //    achievementRef.update({
+  //  //      SpotlightAward:"Completed"
+  //  //    })
+  //  //  }
+  //  //  if(points>=1500)
+  //  //  {
+  //  //    achievementRef.update({
+  //  //      HeroAward:"Completed"
+  //  //    })
+  //  //  }
+  //  //  if(points>=2000)
+  //  //  {
+  //  //    achievementRef.update({
+  //  //      ShiningStarAward:"Completed"
+  //  //    })
+  //  //  }
+  //  //  if(points>=3000)
+  //  //  {
+  //  //    achievementRef.update({
+  //  //      SuperstarAward:"Completed"
+  //  //    })
+  //  //  }
+  //  //  if(points>=4000)
+  //  //  {
+  //  //    achievementRef.update({
+  //  //      PresidentsAward:"Completed"
+  //  //    })
+  //  //  }
+  //  //  if(points>=10000)
+  //  //  {
+  //  //    achievementRef.update({
+  //  //      HonorClub:"Completed"
+  //  //    })
+  //  //  }
+  //  //  if(points>=20000)
+  //  //  {
+  //  //    achievementRef.update({
+  //  //      DiamondClub:"Completed"
+  //  //    })
+  //  //  }
+  //  //  });
+  //}
+
   componentDidMount()
   {
     //Receives each achievement status from the database and updates
-    let userId = firebase.auth().currentUser.uid
-    let achievementRef = firebase.database().ref("/achievements/"+userId)
-      achievementRef.on("value", (info) => {
-        let dataAchievements = this.state.data
-        console.log(dataAchievements)
-        dataAchievements[0].status = info.val().BrightBeginning
-        dataAchievements[1].status = info.val().Respect
-        dataAchievements[2].status = info.val().RockstarRookie
-        dataAchievements[3].status = info.val().LimelightAward
-        dataAchievements[4].status = info.val().SpotlightAward
-        dataAchievements[5].status = info.val().HeroAward
-        dataAchievements[6].status = info.val().ShiningStarAward
-        dataAchievements[7].status = info.val().SuperstarAward
-        dataAchievements[8].status = info.val().PresidentsAward
-        dataAchievements[9].status = info.val().HonorClub
-        dataAchievements[10].status = info.val().DiamondClub
-        this.setState({data:dataAchievements})
-      })
+    //let userId = firebase.auth().currentUser.uid
+    //let achievementRef = firebase.database().ref("/achievements/"+userId)
+    //  achievementRef.on("value", (info) => {
+    //    let dataAchievements = this.state.data
+    //    console.log(dataAchievements)
+    //    dataAchievements[0].status = info.val().BrightBeginning
+    //    dataAchievements[1].status = info.val().Respect
+    //    dataAchievements[2].status = info.val().RockstarRookie
+    //    dataAchievements[3].status = info.val().LimelightAward
+    //    dataAchievements[4].status = info.val().SpotlightAward
+    //    dataAchievements[5].status = info.val().HeroAward
+    //    dataAchievements[6].status = info.val().ShiningStarAward
+    //    dataAchievements[7].status = info.val().SuperstarAward
+    //    dataAchievements[8].status = info.val().PresidentsAward
+    //    dataAchievements[9].status = info.val().HonorClub
+    //    dataAchievements[10].status = info.val().DiamondClub
+    //    this.setState({data:dataAchievements})
+    //  })
   }
     
 
@@ -188,10 +189,19 @@ export default class Achievements extends Component {
     console.log(dataAchieves)
     //The button for more information about an achievement was pressed
     // Shows the modal
-    if(this.state.isVisible==true)
-    {
-      return(
-        <View>
+    //if(this.state.isVisible==true)
+    //{
+    //  return(
+    //    <View>
+
+    //    </View>
+    //  )
+    //}
+    return (
+
+      //Renders the List with all the achievements
+      <View style={styles.container}>
+      { this.state.isVisible && 
             <Modal isVisible={this.state.isVisible}>
                 <View style={styles.modalContainer}>
                 <Image
@@ -214,12 +224,7 @@ export default class Achievements extends Component {
                 />
                 </View>
             </Modal>
-        </View>
-      )
-    }
-    return (
-      //Renders the List with all the achievements
-      <ScrollView>
+      }
         <Header
             backgroundColor = '#1e272e'
             barStyle = 'light-content'
@@ -258,7 +263,7 @@ export default class Achievements extends Component {
           )}}/>
       </View>
 
-      </ScrollView>
+      </View>
     );
   }
 }

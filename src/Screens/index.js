@@ -8,7 +8,7 @@ import PerfilScreen from './Perfil';
 //import RankingScreen from './Ranking';
 import SettingsScreen from './Settings';
 //import StatisticsScreen from './Statistics';
-//import AchievementScreen from './Achievements';
+import AchievementScreen from './Achievements';
 
 import { Icon } from 'react-native-elements';
 
@@ -50,7 +50,6 @@ function AppDrawer() {
                     }}
                 />
 
-                {/*
                 <Drawer.Screen
                     name="Achievements"
                     component={AchievementScreen}
@@ -61,6 +60,7 @@ function AppDrawer() {
                         ),
                     }}
                 />
+                {/*
                 <Drawer.Screen
                     name="Ranking"
                     component={RankingScreen}
