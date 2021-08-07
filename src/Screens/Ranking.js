@@ -18,24 +18,25 @@ class Ranking extends React.Component {
     //Composed by the best 10 users
    componentDidMount()
   {
-    let usersRef = firebase.database().ref("leaderbords/");
-    usersRef.orderByChild("points").limitToFirst(10).on("child_added", (data)=> {
-    //The leaderboards table is composed by negative numbers because Firebase just organizes the information in ascending order.
-    let points = (data.val().points)*(-1)
-    let newArr = [];
-    let obj = {name: data.val().name,points:points}
-    newArr.push(obj)
-    let Aux = this.state.npList;
-    Array.prototype.push.apply(Aux,newArr)
-    this.setState({npList:Aux})
-    })
-    let userid = firebase.auth().currentUser.uid
-    let usersRefId = firebase.database().ref("users/"+userid);
+    // TODO: create ranking endpoint
+    //let usersRef = firebase.database().ref("leaderbords/");
+    //usersRef.orderByChild("points").limitToFirst(10).on("child_added", (data)=> {
+    ////The leaderboards table is composed by negative numbers because Firebase just organizes the information in ascending order.
+    //let points = (data.val().points)*(-1)
+    //let newArr = [];
+    //let obj = {name: data.val().name,points:points}
+    //newArr.push(obj)
+    //let Aux = this.state.npList;
+    //Array.prototype.push.apply(Aux,newArr)
+    //this.setState({npList:Aux})
+    //})
+    //let userid = firebase.auth().currentUser.uid
+    //let usersRefId = firebase.database().ref("users/"+userid);
 
-    usersRefId.on("value", (data) => {
-      let points = data.val().points
-      this.setState({points:points})
-      })
+    //usersRefId.on("value", (data) => {
+    //  let points = data.val().points
+    //  this.setState({points:points})
+    //  })
   }
      
   render() {

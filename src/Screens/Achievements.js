@@ -162,6 +162,7 @@ export default class Achievements extends Component {
 
   componentDidMount()
   {
+    // TODO: create endpoint
     //Receives each achievement status from the database and updates
     //let userId = firebase.auth().currentUser.uid
     //let achievementRef = firebase.database().ref("/achievements/"+userId)
