@@ -3,7 +3,7 @@ import {Image, View ,StyleSheet,TouchableWithoutFeedback,Text,TouchableHighlight
 import {Header, Card} from 'react-native-elements'
 import DialogInput from 'react-native-dialog-input';
 import * as firebase from 'firebase'
-import * as ImagePicker from 'expo-image-picker'
+//import * as ImagePicker from 'expo-image-picker'
 export default class ImagePickerExample extends React.Component {
   state = {
     image: firebase.auth().currentUser.photoURL,
@@ -25,20 +25,20 @@ export default class ImagePickerExample extends React.Component {
   }
 
   //Function for selecting image from the device library and update
-  _pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
-      aspect: [4, 3],
-    });
-    if (!result.cancelled) {
-      //updates the image link
-      this.setState({ image: result.uri });
-      this.state.userRef.update({image: result.uri})
-      firebase.auth().currentUser.updateProfile({
-        photoURL:result.uri
-      })
-    }
-  };
+  //_pickImage = async () => {
+  //  let result = await ImagePicker.launchImageLibraryAsync({
+  //    allowsEditing: true,
+  //    aspect: [4, 3],
+  //  });
+  //  if (!result.cancelled) {
+  //    //updates the image link
+  //    this.setState({ image: result.uri });
+  //    this.state.userRef.update({image: result.uri})
+  //    firebase.auth().currentUser.updateProfile({
+  //      photoURL:result.uri
+  //    })
+  //  }
+  //};
   //Function for recover user password
   async onRecoverButton (){
 
@@ -62,9 +62,10 @@ export default class ImagePickerExample extends React.Component {
     if(text.length > 1)
     {
       this.setState({name: text})
-      firebase.auth().currentUser.updateProfile({
-        displayName:text
-      })//.then(() => this.setState({isEditingName: false}))
+      // TODO: send to backend to update
+      //firebase.auth().currentUser.updateProfile({
+      //  displayName:text
+      //})//.then(() => this.setState({isEditingName: false}))
       this.state.userRef.update({name: text})
       this.state.rankingRef.update({name: text})
       this.setState({isEditingName: false})
@@ -74,7 +75,7 @@ export default class ImagePickerExample extends React.Component {
   }
 
   render() {
-    let { image } = this.state;
+    // let { image } = this.state;
 
     //Alert that email for recover password was sent
     if(this.state.isPressed==true)
@@ -118,6 +119,7 @@ export default class ImagePickerExample extends React.Component {
       >
         {/*Touchable Highlight for setting profile picture */}
         <View style = {styles.inputContainerPhoto}>
+          {/*
           <TouchableWithoutFeedback
           onPress={this._pickImage}>
             <Image
@@ -125,6 +127,7 @@ export default class ImagePickerExample extends React.Component {
               style={{ width: 100, height: 100,borderRadius:20 }}
             />
           </TouchableWithoutFeedback>
+          */}
           {/* <Text style = {styles.textPhoto}>
             Change your profile picture
           </Text> */}

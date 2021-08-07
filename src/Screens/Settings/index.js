@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import SettingsScreen from './Settings';
 import HelpScreen from './Help';
-//import UpdateProfileScreen from './Update'
+import UpdateProfileScreen from './Update'
 import InfoScreen from './Info'
 //import NotificationScreen from './Notifications'
 
@@ -41,6 +41,16 @@ function SettingsStack() {
       <Stack.Screen
         name="Help"
         component={HelpScreen}
+      />
+      {/*
+      <Stack.Screen
+        name="Notification"
+        component={NotificationScreen}
+      />
+      */}
+      <Stack.Screen
+        name="UpdateProfile"
+        component={UpdateProfileScreen}
       />
     </Stack.Navigator>
   );

@@ -4,7 +4,7 @@ import { Notifications } from 'expo';
 import * as firebase from 'firebase'
 import * as Permissions from 'expo-permissions'
 import {Header} from 'react-native-elements'
-import moment from 'moment'
+//import moment from 'moment'
 
 export default class Alarm extends React.Component {
 
@@ -31,10 +31,10 @@ export default class Alarm extends React.Component {
     await this.registerForPushNotificationsAsync()
     .then((res) => {
       this.setState({ isEnabled: true })
-      let userId = firebase.auth().currentUser.uid
-      firebase.database().ref("/users/" + userId).update({
-        notification:true
-      })
+      //let userId = firebase.auth().currentUser.uid
+      //firebase.database().ref("/users/" + userId).update({
+      //  notification:true
+      //})
       const localNotification = {
         title: "Daily Notification",
         body: "Let's Study Project Management",
@@ -45,7 +45,7 @@ export default class Alarm extends React.Component {
         repeat:"day"
       }
       Notifications.scheduleLocalNotificationAsync(localNotification, schedulingOptions)
-      .then(id => console.info(`Delayed notification scheduled (${id}) at ${moment(schedulingOptions.time).format()}`))
+      //.then(id => console.info(`Delayed notification scheduled (${id}) at ${moment(schedulingOptions.time).format()}`))
       .catch(err => console.error(err))
 
     })
@@ -62,10 +62,10 @@ export default class Alarm extends React.Component {
     Notifications.cancelAllScheduledNotificationsAsync()
     .then((res) => {
       this.setState({ isEnabled: false })
-      let userId = firebase.auth().currentUser.uid
-      firebase.database().ref("/users/" + userId).update({
-        notification:false
-      })
+      //let userId = firebase.auth().currentUser.uid
+      //firebase.database().ref("/users/" + userId).update({
+      //  notification:false
+      //})
     })
     .catch((error)=>{
       console.log('error ' , error)
