@@ -22,44 +22,44 @@ class Statistics extends React.Component {
   //Receiving the information from the database
   componentDidMount()
   {
+    // TODO: add endpoint to get user info
+    //let userid = firebase.auth().currentUser.uid;
 
-    let userid = firebase.auth().currentUser.uid;
+    //let usersRefPoints = firebase.database().ref("/users/"+userid);
 
-    let usersRefPoints = firebase.database().ref("/users/"+userid);
+    ////Receivers user information
+    //usersRefPoints.once("value", (data)=> {
+    //let points = data.val().points
+    //let progress = data.val().progress
+    //this.setState({points:points})
+    //this.setState({progress:progress})
+    //})
+    //let usersRef = firebase.database().ref("/statistics/"+userid);
 
-    //Receivers user information
-    usersRefPoints.once("value", (data)=> {
-    let points = data.val().points
-    let progress = data.val().progress
-    this.setState({points:points})
-    this.setState({progress:progress})
-    })
-    let usersRef = firebase.database().ref("/statistics/"+userid);
+    ////Creates an array for receiving statistics information limited to last 6 information from the database
+    //usersRef.limitToLast(6).on("child_added", (data)=> {
+    //
+    ////Receives the user points and the date
+    //let point = data.val().points
+    //let date = data.val().date
+    //let newArrPoints = [];
+    //let newArrLabels = [];
+    //
+    //newArrPoints.push(point);
+    //newArrLabels.push(date);
+    //
+    //let auxLabel = this.state.labels;
+    //let auxPoints = this.state.dataPoints;
+    //
+    //Array.prototype.push.apply(auxLabel,newArrLabels)
+    //console.log(auxLabel)
+    //this.setState({labels:auxLabel})
 
-    //Creates an array for receiving statistics information limited to last 6 information from the database
-    usersRef.limitToLast(6).on("child_added", (data)=> {
-    
-    //Receives the user points and the date
-    let point = data.val().points
-    let date = data.val().date
-    let newArrPoints = [];
-    let newArrLabels = [];
-    
-    newArrPoints.push(point);
-    newArrLabels.push(date);
-    
-    let auxLabel = this.state.labels;
-    let auxPoints = this.state.dataPoints;
-    
-    Array.prototype.push.apply(auxLabel,newArrLabels)
-    console.log(auxLabel)
-    this.setState({labels:auxLabel})
-
-    Array.prototype.push.apply(auxPoints,newArrPoints)
-    console.log(auxPoints)
-    this.setState({dataPoints:auxPoints})
-    
-  })
+    //Array.prototype.push.apply(auxPoints,newArrPoints)
+    //console.log(auxPoints)
+    //this.setState({dataPoints:auxPoints})
+    //
+    //})
   }
   
   render() {

@@ -7,7 +7,7 @@ import ActivitiesScreen from './Activities';
 import PerfilScreen from './Perfil';
 import RankingScreen from './Ranking';
 import SettingsScreen from './Settings';
-//import StatisticsScreen from './Statistics';
+import StatisticsScreen from './Statistics';
 import AchievementScreen from './Achievements';
 
 import { Icon } from 'react-native-elements';
@@ -69,7 +69,6 @@ function AppDrawer() {
                         ),
                     }}
                 />
-                {/*
                 <Drawer.Screen
                     name="Statistics"
                     component={StatisticsScreen}
@@ -84,7 +83,6 @@ function AppDrawer() {
                         ),
                     }}
                 />
-                */}
                 <Drawer.Screen
                     name="Settings"
                     component={SettingsScreen}
