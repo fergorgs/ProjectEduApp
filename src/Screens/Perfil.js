@@ -2,46 +2,48 @@ import React, { Component } from 'react';
 import {StyleSheet,Text,View,Image,TouchableOpacity} from 'react-native';
 import { Header } from 'react-native-elements';
 //import Orientation from 'react-native-orientation';
-//import * as firebase from 'firebase'
+import * as firebase from 'firebase'
 
 export default class Perfil extends Component {
 
 
-  //state = {
-  //      name: '',
-  //      email:'',
-  //      photo:null,
-  //      points:'',
-  //      progress:'',
-  //      currentDate: new Date(),
-  //}
+  state = {
+        name: '',
+        email:'',
+        photo:null,
+        points:'',
+        progress:'',
+        currentDate: new Date(),
+  }
 
 
   //Receives all the user information from the database
   componentDidMount(){
-    let userid = firebase.auth().currentUser.uid
-    let usersRef = firebase.database().ref("users/"+userid);
+    this.setState({email:firebase.auth().currentUser.email})
+    // TODO: create endpoint to get user info
+    //let userid = firebase.auth().currentUser.uid
+    //let usersRef = firebase.database().ref("users/"+userid);
 
-    usersRef.on("value", (data) => {
-      let points = data.val().points
-      
-      this.setState({points:points})
-      this.setState({name:data.val().name})
-      this.setState({progress:data.val().progress})
-      this.setState({email:firebase.auth().currentUser.email})
+    //usersRef.on("value", (data) => {
+    //  let points = data.val().points
+    //  
+    //  this.setState({points:points})
+    //  this.setState({name:data.val().name})
+    //  this.setState({progress:data.val().progress})
+    //  this.setState({email:firebase.auth().currentUser.email})
 
-      if(firebase.auth().currentUser.photoURL===null)
-      {
-          this.setState({photo:data.val().image})
-          firebase.auth().currentUser.updateProfile({
-            photoURL:data.val().image
-          })
-      }
-      else
-      {
-        this.setState({photo:firebase.auth().currentUser.photoURL})
-      }
-    });
+    //  if(firebase.auth().currentUser.photoURL===null)
+    //  {
+    //      this.setState({photo:data.val().image})
+    //      firebase.auth().currentUser.updateProfile({
+    //        photoURL:data.val().image
+    //      })
+    //  }
+    //  else
+    //  {
+    //    this.setState({photo:firebase.auth().currentUser.photoURL})
+    //  }
+    //});
 
     // Orientation.addOrientationListener(this._orientationDidChange);
 

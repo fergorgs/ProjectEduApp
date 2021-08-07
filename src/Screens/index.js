@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import ActivitiesScreen from './Activities';
-//import PerfilScreen from './Perfil';
+import PerfilScreen from './Perfil';
 //import RankingScreen from './Ranking';
 import SettingsScreen from './Settings';
 //import StatisticsScreen from './Statistics';
@@ -29,7 +29,6 @@ function AppDrawer() {
     return (
         <NavigationContainer>
             <Drawer.Navigator initialRouteName="Activities">
-                {/*
                 <Drawer.Screen
                     name="Perfil"
                     component={PerfilScreen}
@@ -40,7 +39,6 @@ function AppDrawer() {
                         ),
                     }}
                 />
-                */}
                 <Drawer.Screen
                     name="Activities"
                     component={ActivitiesScreen}
