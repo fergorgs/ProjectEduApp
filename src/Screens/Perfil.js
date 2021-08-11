@@ -1,89 +1,116 @@
-import React, { Component } from 'react';
-import {StyleSheet,Text,View,Image,TouchableOpacity} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { Header } from 'react-native-elements';
 //import Orientation from 'react-native-orientation';
-import * as firebase from 'firebase'
+import * as firebase from 'firebase';
+import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
-export default class Perfil extends Component {
+export default function Perfil() {
+  const navigation = useNavigation();
+  const [data, setData] = useState({});
+  const [fetching, setFetching] = useState(false);
+  //state = {
+  //      name: '',
+  //      email:'',
+  //      photo:null,
+  //      points:'',
+  //      progress:'',
+  //      currentDate: new Date(),
+  //}
 
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
-  state = {
-        name: '',
-        email:'',
-        photo:null,
-        points:'',
-        progress:'',
-        currentDate: new Date(),
-  }
+  const fetchData = async () => {
+    const user = firebase.auth().currentUser;
+    const token = await user?.getIdToken();
 
+    if (!token) {
+      setFetching(false);
+      return;
+    }
+    axios
+      .get('http://192.168.0.29:8000/user', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then((res) => {
+        console.log(res.data)
+        setData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   //Receives all the user information from the database
-  componentDidMount(){
-    this.setState({email:firebase.auth().currentUser.email})
-    // TODO: create endpoint to get user info
-    //let userid = firebase.auth().currentUser.uid
-    //let usersRef = firebase.database().ref("users/"+userid);
+  //componentDidMount(){
+  //  //this.setState({email:firebase.auth().currentUser.email})
+  //  // TODO: create endpoint to get user info
+  //  //let userid = firebase.auth().currentUser.uid
+  //  //let usersRef = firebase.database().ref("users/"+userid);
 
-    //usersRef.on("value", (data) => {
-    //  let points = data.val().points
-    //  
-    //  this.setState({points:points})
-    //  this.setState({name:data.val().name})
-    //  this.setState({progress:data.val().progress})
-    //  this.setState({email:firebase.auth().currentUser.email})
+  //  //usersRef.on("value", (data) => {
+  //  //  let points = data.val().points
+  //  //
+  //  //  this.setState({points:points})
+  //  //  this.setState({name:data.val().name})
+  //  //  this.setState({progress:data.val().progress})
+  //  //  this.setState({email:firebase.auth().currentUser.email})
 
-    //  if(firebase.auth().currentUser.photoURL===null)
-    //  {
-    //      this.setState({photo:data.val().image})
-    //      firebase.auth().currentUser.updateProfile({
-    //        photoURL:data.val().image
-    //      })
-    //  }
-    //  else
-    //  {
-    //    this.setState({photo:firebase.auth().currentUser.photoURL})
-    //  }
-    //});
+  //  //  if(firebase.auth().currentUser.photoURL===null)
+  //  //  {
+  //  //      this.setState({photo:data.val().image})
+  //  //      firebase.auth().currentUser.updateProfile({
+  //  //        photoURL:data.val().image
+  //  //      })
+  //  //  }
+  //  //  else
+  //  //  {
+  //  //    this.setState({photo:firebase.auth().currentUser.photoURL})
+  //  //  }
+  //  //});
 
-    // Orientation.addOrientationListener(this._orientationDidChange);
+  //  // Orientation.addOrientationListener(this._orientationDidChange);
 
-  }
+  //}
 
   // _orientationDidChange = (orientation) => {
   //   alert("changed")
   // }
 
-
-  render() {
-    return (
+  //render() {
+  return (
     <View>
-       {/*Screen Header Informatiom */}
-        <Header
-            backgroundColor = '#1e272e'
-            barStyle = 'light-content'
-            leftComponent={{
-            icon: 'menu',
-            color: '#fff',
-            onPress: () => this.props.navigation.openDrawer(),
-            }}
-            centerComponent={{ text: 'PROFILE', style: { color: '#fff' } }}
-        /> 
-        {/* Renders User Profile */}
-        <View style={styles.container}>
-          <View style={styles.header}></View>
-          <Image style={styles.avatar} source={{uri:this.state.photo}}/>
-          <View style={styles.body}>
-            <View style={styles.bodyContent}>
-              <Text style={styles.name}>{this.state.name}</Text>
-              <Text style={styles.info}>{this.state.email}</Text>
-              <Text style={styles.description}>
-                Points: {this.state.points}
-              </Text>
-              <Text style={styles.description}>
-                Progress: {this.state.progress}%
-              </Text>
-              
-              {/*Renders the 3 button on the profile screen
+      {/*Screen Header Informatiom */}
+      <Header
+        backgroundColor="#1e272e"
+        barStyle="light-content"
+        leftComponent={{
+          icon: 'menu',
+          color: '#fff',
+          onPress: () => navigation.openDrawer()
+        }}
+        centerComponent={{ text: 'PROFILE', style: { color: '#fff' } }}
+      />
+      {/* Renders User Profile */}
+      <View style={styles.container}>
+        <View style={styles.header}></View>
+        <Image
+          style={styles.avatar}
+          source={{ uri: firebase.auth().currentUser.photoURL }}
+        />
+        <View style={styles.body}>
+          <View style={styles.bodyContent}>
+            <Text style={styles.name}>{firebase.auth().currentUser.displayName}</Text>
+            <Text style={styles.info}>{firebase.auth().currentUser.email}</Text>
+            <Text style={styles.description}>Points: {data.points}</Text>
+            <Text style={styles.description}>Progress: {data.progress}%</Text>
+
+            {/*Renders the 3 button on the profile screen
                 Activies
                 Ranking
                 Settings
@@ -130,87 +157,83 @@ export default class Perfil extends Component {
                     </View>
                 </TouchableOpacity>
             </View>  */}
-                
-            </View>
+          </View>
         </View>
       </View>
     </View>
-    
-    );
-  }
+  );
+  //}
 }
 
 const styles = StyleSheet.create({
-  header:{
-    backgroundColor: "#3b5998",
-    height:180,
+  header: {
+    backgroundColor: '#3b5998',
+    height: 180
   },
   avatar: {
     width: 130,
     height: 130,
     borderRadius: 63,
     borderWidth: 4,
-    borderColor: "white",
-    marginBottom:10,
-    alignSelf:'center',
+    borderColor: 'white',
+    marginBottom: 10,
+    alignSelf: 'center',
     position: 'absolute',
-    marginTop:130
+    marginTop: 130
   },
-  name:{
-    fontSize:22,
-    color:"#FFFFFF",
-    fontWeight:'600',
+  name: {
+    fontSize: 22,
+    color: '#FFFFFF',
+    fontWeight: '600'
   },
-  body:{
-    marginTop:40,
+  body: {
+    marginTop: 40
   },
   bodyContent: {
     flex: 1,
     alignItems: 'center',
-    padding:30,
+    padding: 30
   },
-  name:{
-    fontSize:28,
-    color: "#696969",
-    fontWeight: "600"
+  name: {
+    fontSize: 28,
+    color: '#696969',
+    fontWeight: '600'
   },
-  info:{
-    fontSize:16,
-    color: "#00BFFF",
-    marginTop:10
+  info: {
+    fontSize: 16,
+    color: '#00BFFF',
+    marginTop: 10
   },
-  description:{
-    fontSize:22,
-    color: "#696969",
-    marginTop:20,
+  description: {
+    fontSize: 22,
+    color: '#696969',
+    marginTop: 20,
     textAlign: 'center'
   },
   buttonContainer: {
-    marginTop:10,
-    height:45,
+    marginTop: 10,
+    height: 45,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom:20,
-    width:250,
-    borderRadius:30,
-    backgroundColor: "#00BFFF",
+    marginBottom: 20,
+    width: 250,
+    borderRadius: 30,
+    backgroundColor: '#00BFFF'
   },
   followButtonPlay: {
-    marginTop:10,
+    marginTop: 10,
     marginBottom: 10,
-    height:35,
-    width:100,
-    padding:10,
+    height: 35,
+    width: 100,
+    padding: 10,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: "white",
+    backgroundColor: 'white'
   },
-  imageIcon:{
-    width:80,
-    height:80
-    ,
-  },
+  imageIcon: {
+    width: 80,
+    height: 80
+  }
 });
- 

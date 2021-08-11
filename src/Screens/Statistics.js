@@ -23,7 +23,7 @@ function Statistics() {
 
   useEffect(() => {
     fetchData();
-  }, [axios]);
+  }, [ fetchData ]);
 
   const fetchData = async () => {
     const user = firebase.auth().currentUser;
