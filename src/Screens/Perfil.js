@@ -32,13 +32,12 @@ export default function Perfil() {
       return;
     }
     axios
-      .get('http://192.168.0.29:8000/user', {
+      .get('http://192.168.0.29:8000/me', {
         headers: {
           Authorization: `Bearer ${token}`
         }
       })
       .then((res) => {
-        console.log(res.data)
         setData(res.data);
       })
       .catch((err) => {
