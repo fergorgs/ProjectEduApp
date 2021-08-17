@@ -216,7 +216,7 @@ export default class Achievements extends Component {
                 {this.state.data[this.state.idSelected].description}
                 </Text>
                 <Text style = {{textAlign:"center",fontSize:15,color:"#8395a7"}}>
-                  Status: {this.state.data[this.state.idSelected].status}
+                  Status: {this.state.data[this.state.idSelected].status || "Unavailable" }
                 </Text>
                 <Button
                     onPress = {() => this.setState({isVisible:false})}
@@ -255,7 +255,7 @@ export default class Achievements extends Component {
               <Image style={styles.image} source={{uri: item.image}}/>
               <View style={styles.cardContent}>
                 <Text style={styles.name}>{item.name}</Text>
-                <Text style={styles.count}>Status: {item.status}</Text>
+                <Text style={styles.count}>Status: {item.status || "Unavailable" }</Text>
                 <TouchableOpacity style={styles.followButton} onPress={()=> this.clickEventListener(item)}>
                   <Text style={styles.followButtonText}>Explore now</Text>  
                 </TouchableOpacity>

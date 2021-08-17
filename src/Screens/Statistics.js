@@ -83,7 +83,7 @@ function Statistics() {
         rightComponent={{
           icon: 'portrait',
           color: '#fff',
-          onPress: () => this.props.navigation.navigate('Perfil')
+          onPress: () => navigation.navigate('Perfil')
         }}
       />
       <ScrollView
@@ -104,7 +104,7 @@ function Statistics() {
           >
             <Image
               style={styles.imageCard}
-              source={{ uri: firebase.auth().currentUser.photoURL }}
+              source={{ uri: firebase.auth().currentUser.photoURL || "https://isaojose.com.br/wp-content/uploads/2020/12/blank-profile-picture-mystery-man-avatar-973460.jpg" }}
             />
             <View style={{ margin: 10 }}>
               <Text style={{ fontSize: 17, color: '#ffffff' }}>
