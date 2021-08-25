@@ -93,7 +93,7 @@ function Ranking() {
           color: '#fff',
           onPress: () => navigation.openDrawer()
         }}
-        centerComponent={{ text: 'RANKING', style: { color: '#fff' } }}
+        centerComponent={{ text: 'Ranking', style: { color: '#fff' } }}
         rightComponent={{
           icon: 'portrait',
           color: '#fff',
@@ -117,9 +117,9 @@ function Ranking() {
           />
           <View style={{ margin: 10 }}>
             <Text style={{ fontSize: 15, color: '#ffffff' }}>
-              Name: {firebase.auth().currentUser.displayName}
+              Nome: {firebase.auth().currentUser.displayName}
             </Text>
-            <Text style={{ fontSize: 15, color: '#ffffff' }}>Points: {points}</Text>
+            <Text style={{ fontSize: 15, color: '#ffffff' }}>Pontuação: {points}</Text>
           </View>
         </View>
       </Card>

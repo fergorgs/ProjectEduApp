@@ -79,7 +79,7 @@ function Statistics() {
           color: '#fff',
           onPress: () => navigation.openDrawer()
         }}
-        centerComponent={{ text: 'STATISTICS', style: { color: '#fff' } }}
+        centerComponent={{ text: 'Estatísticas', style: { color: '#fff' } }}
         rightComponent={{
           icon: 'portrait',
           color: '#fff',
@@ -108,13 +108,13 @@ function Statistics() {
             />
             <View style={{ margin: 10 }}>
               <Text style={{ fontSize: 17, color: '#ffffff' }}>
-                Name: {firebase.auth().currentUser.displayName}
+                Nome: {firebase.auth().currentUser.displayName}
               </Text>
               <Text style={{ fontSize: 17, color: '#ffffff' }}>
-                Points: {stats.total}
+                Pontuação: {stats.total}
               </Text>
               <Text style={{ fontSize: 17, color: '#ffffff' }}>
-                Progress: {stats.progress} %
+                Progresso: {stats.progress}%
               </Text>
             </View>
           </View>

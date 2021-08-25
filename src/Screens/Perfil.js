@@ -93,7 +93,7 @@ export default function Perfil() {
           color: '#fff',
           onPress: () => navigation.openDrawer()
         }}
-        centerComponent={{ text: 'PROFILE', style: { color: '#fff' } }}
+        centerComponent={{ text: 'Perfil', style: { color: '#fff' } }}
       />
       {/* Renders User Profile */}
       <View style={styles.container}>
@@ -106,8 +106,8 @@ export default function Perfil() {
           <View style={styles.bodyContent}>
             <Text style={styles.name}>{firebase.auth().currentUser.displayName}</Text>
             <Text style={styles.info}>{firebase.auth().currentUser.email}</Text>
-            <Text style={styles.description}>Points: {data.points}</Text>
-            <Text style={styles.description}>Progress: {data.progress}%</Text>
+            <Text style={styles.description}>Pontuação: {data.points}</Text>
+            <Text style={styles.description}>Progresso: {data.progress}%</Text>
 
             {/*Renders the 3 button on the profile screen
                 Activies
@@ -186,7 +186,8 @@ const styles = StyleSheet.create({
     fontWeight: '600'
   },
   body: {
-    marginTop: 40
+    marginTop: 40,
+    paddingTop: 20
   },
   bodyContent: {
     flex: 1,

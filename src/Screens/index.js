@@ -33,7 +33,7 @@ function AppDrawer() {
                     name="Perfil"
                     component={PerfilScreen}
                     options={{
-                        title: 'Profile',
+                        title: 'Perfil',
                         drawerIcon: ({ tintColor }) => (
                             <Icon name="home" color={tintColor} size={24} />
                         ),
@@ -43,7 +43,7 @@ function AppDrawer() {
                     name="Activities"
                     component={ActivitiesScreen}
                     options={{
-                        title: 'Activities',
+                        title: 'Atividades',
                         drawerIcon: ({ tintColor }) => (
                             <Icon name="work" color={tintColor} size={24} />
                         )
@@ -53,7 +53,7 @@ function AppDrawer() {
                     name="Achievements"
                     component={AchievementScreen}
                     options={{
-                        title: 'Achievements',
+                        title: 'Conquistas',
                         drawerIcon: ({ tintColor }) => (
                             <Icon name="star" color={tintColor} size={24} />
                         ),
@@ -73,7 +73,7 @@ function AppDrawer() {
                     name="Statistics"
                     component={StatisticsScreen}
                     options={{
-                        title: 'Statistics',
+                        title: 'Estatísticas',
                         drawerIcon: ({ tintColor }) => (
                             <Icon
                                 name="graphic-eq"
@@ -87,7 +87,7 @@ function AppDrawer() {
                     name="Settings"
                     component={SettingsScreen}
                     options={{
-                        title: 'Settings',
+                        title: 'Configurações',
                         drawerIcon: ({ tintColor }) => (
                             <Icon name="settings" color={tintColor} size={24} />
                         ),
