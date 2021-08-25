@@ -17,23 +17,23 @@ constructor(props) {
       listSettings:
       [
         {
-            title:"About",
+            title:"Sobre",
             icon:"info"
         },
         {
-            title:"Help",
+            title:"Ajuda",
             icon:"search"
         },
         {
-            title:"Update your profile",
+            title:"Atualizar Perfil",
             icon:"refresh"
         },
         {
-            title:"Notifications",
+            title:"Notificações",
             icon:"call"
         },
         {
-            title:"Logout",
+            title:"Sair do App",
             icon:"pause"
         }
       ]
@@ -64,7 +64,7 @@ constructor(props) {
           color: '#fff',
           onPress: () => this.props.navigation.openDrawer(),
           }}
-          centerComponent={{ text: 'SETTINGS', style: { color: '#fff' } }}
+          centerComponent={{ text: 'Configurações', style: { color: '#fff' } }}
           rightComponent={{ 
           icon: 'portrait', 
           color: '#fff',
@@ -84,23 +84,23 @@ constructor(props) {
           }}
           onPress = {
             (function(){
-              if(l.title=="About")
+              if(l.title=="Sobre")
               {
                 this.props.navigation.navigate("Info")
               }
-              if(l.title=="Help")
+              if(l.title=="Ajuda")
               {
                 this.props.navigation.navigate("Help")
               }
-              if(l.title=="Update your profile")
+              if(l.title=="Atualizar Perfil")
               {
                 this.props.navigation.navigate("UpdateProfile")
               }
-              if(l.title=="Notifications")
+              if(l.title=="Notificações")
               {
                 this.props.navigation.navigate("Notification")
               }
-              if(l.title=="Logout")
+              if(l.title=="Sair do App")
               {
                   this.OnLogout()
               }

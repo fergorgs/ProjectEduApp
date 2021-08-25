@@ -22,6 +22,12 @@ export default class Alarm extends React.Component {
     //  let isAvailable = data.val().notification
     //  this.setState({isEnabled:isAvailable})
     //});
+    //
+    Notifications.getAllScheduledNotificationsAsync()
+      .then((res) => {
+        if (res.length > 0) 
+          this.setState({ isEnabled: true });
+      });
   }
 
   //Enable notifications for the app
@@ -36,8 +42,8 @@ export default class Alarm extends React.Component {
       //  notification:true
       //})
       const localNotification = {
-        title: "Daily Notification",
-        body: "Let's Study Project Management",
+        title: "Notificação Diária",
+        body: "Vamos estudar gestão de projetos!",
         sound:true
       }
       const schedulingOptions = {
@@ -128,11 +134,11 @@ export default class Alarm extends React.Component {
           color: '#fff',
           onPress: () =>  this.props.navigation.goBack(),
           }}
-          centerComponent={{ text: 'NOTIFICATIONS', style: { color: '#fff' } }}
+          centerComponent={{ text: 'Notificações', style: { color: '#fff' } }}
         />
 
       <View style={styles.toolbar}>
-            <Text style={styles.toolbarTitle}>Enable Notifications</Text>
+            <Text style={styles.toolbarTitle}>Ativar Notificações</Text>
             <View style={styles.toolbarButton}>
               <Switch
                 value={this.state.isEnabled}

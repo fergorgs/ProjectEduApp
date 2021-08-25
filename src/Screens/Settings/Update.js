@@ -18,10 +18,10 @@ export default class ImagePickerExample extends React.Component {
 
   componentDidMount(){
     let userid = firebase.auth().currentUser.uid
-    let userRef = firebase.database().ref("users/"+userid);
-    let rankingRef = firebase.database().ref("leaderbords/"+userid);
-    this.setState({userRef})
-    this.setState({rankingRef})
+    //let userRef = firebase.database().ref("users/"+userid);
+    //let rankingRef = firebase.database().ref("leaderbords/"+userid);
+    //this.setState({userRef})
+    //this.setState({rankingRef})
   }
 
   //Function for selecting image from the device library and update
@@ -71,7 +71,7 @@ export default class ImagePickerExample extends React.Component {
       this.setState({isEditingName: false})
     }
     else
-      alert('Your name must have at least 2 characters')
+      alert('Seu nome deve ter pelo menos 2 caracteres')
   }
 
   render() {
@@ -81,8 +81,8 @@ export default class ImagePickerExample extends React.Component {
     if(this.state.isPressed==true)
     {
       Alert.alert(
-        'Recover Password',
-        'The request was sent to your email',
+        'Recuperação de Senha',
+        'O pedido foi enviado para o seu email',
         [
           {text: 'OK', onPress: () =>  this.setState({ isPressed: false })},
         ],
@@ -93,7 +93,7 @@ export default class ImagePickerExample extends React.Component {
     return (
       <View style={styles.container}>
       <DialogInput isDialogVisible={this.state.isEditingName}
-            title={"Edit name"}
+            title={"Editar nome"}
             hintInput ={this.state.name}
             closeDialog={() => {this.setState({isEditingName: false})}}
             submitInput={this.changeName}>
@@ -106,19 +106,27 @@ export default class ImagePickerExample extends React.Component {
           color: '#fff',
           onPress: () =>  this.props.navigation.goBack(),
           }}
-          centerComponent={{ text: 'PROFILE UPDATE', style: { color: '#fff' } }}
+          centerComponent={{ text: 'Atualizar Perfil', style: { color: '#fff' } }}
         />
 
       {/*Card with User main information */}
       <Card containerStyle = {{backgroundColor: '#3b5998',borderRadius: 20,}}
-        title = "Personal Information"
-        titleStyle = {{
-          fontSize:18,
-          color:"#ffffff"
-        }}
+        //title = "Informação Pessoal"
+        //titleStyle = {{
+        //  fontSize:18,
+        //  color:"#ffffff"
+        //}}
       >
         {/*Touchable Highlight for setting profile picture */}
+        <Card.Title style={{
+          fontSize:18,
+          color:"#ffffff"
+        }}>Informação Pessoal</Card.Title>
         <View style = {styles.inputContainerPhoto}>
+          <Image
+            style={{ width: 100, height: 100,borderRadius:20 }}
+            source={{ uri: firebase.auth().currentUser.photoURL || "https://isaojose.com.br/wp-content/uploads/2020/12/blank-profile-picture-mystery-man-avatar-973460.jpg" }}
+          />
           {/*
           <TouchableWithoutFeedback
           onPress={this._pickImage}>
@@ -135,11 +143,11 @@ export default class ImagePickerExample extends React.Component {
         {/*User main information */}
         <View style={{paddingTop: 15}}>
           <Text style = {styles.textInfo}>
-            Name: {this.state.name}
+            Nome: {this.state.name}
           </Text>
           <View style={{flexDirection: "row-reverse", height: 30}}>
             <TouchableHighlight style={[styles.editButtonContainer, styles.recoverButton]} onPress={() => this.setState({isEditingName: true})}>
-              <Text style={styles.recoverText}>Edit name</Text>
+              <Text style={styles.recoverText}>Editar nome</Text>
             </TouchableHighlight>
           </View>
           {/* <TextInput
@@ -152,7 +160,7 @@ export default class ImagePickerExample extends React.Component {
           </Text>
           <View style={{flexDirection: "row-reverse", height: 30}}>
             <TouchableHighlight style={[styles.editButtonContainer, styles.recoverButton]} onPress={() => alert('Edit email presses')}>
-              <Text style={styles.recoverText}>Edit email</Text>
+              <Text style={styles.recoverText}>Editar email</Text>
             </TouchableHighlight>
           </View>
         </View>
@@ -170,7 +178,7 @@ export default class ImagePickerExample extends React.Component {
       
          {/*Button - Recover Password */}
       <TouchableHighlight style={[styles.buttonContainer, styles.recoverButton]} onPress={this.onRecoverButton.bind(this)}>
-          <Text style={styles.recoverText}>Change Password</Text>
+          <Text style={styles.recoverText}>Trocar senha</Text>
       </TouchableHighlight>
 
     </View>

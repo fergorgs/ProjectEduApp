@@ -7,8 +7,7 @@ class Info extends React.Component {
   
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.container}>
-
+        <View>
         <Header
           backgroundColor = '#1e272e'
           leftComponent={{
@@ -16,35 +15,38 @@ class Info extends React.Component {
           color: '#fff',
           onPress: () =>  this.props.navigation.goBack(),
           }}
-          centerComponent={{ text: 'ABOUT', style: { color: '#fff' } }}
+          centerComponent={{ text: 'Sobre', style: { color: '#fff' } }}
         />
+
+      <ScrollView contentContainerStyle={styles.container}>
+
 
         <View>
             <Text style={styles.textTitle}>
-                More about ProjectEdu
+                Mais sobre o ProjectEdu
             </Text>
             
             <Text style={styles.textInfo}>
-                ProjectEdu is a mobile learning application prototype focused on users who
-                want to learn Software Project Management. Several mobile applications can be
-                found in order to carry out the management activities throughout the project,
-                but ProjectEdu stands out since it focuses on teaching Project Management
-                theory as well as its practice.
+                ProjectEdu é um protótipo de aplicação de aprendizado móvel focado em usuários
+                que querem aprender Gestão de Projetos de Software. Muitas aplicações móveis 
+                podem ser encontradas para realizar a gestão das atividades durante o projeto,
+                mas o ProjectEdu se destaca por focar no ensino da teoria sobre Gestão de 
+                projetos, bem como sua prática.
             </Text>
             <Text style={styles.textInfo}>
-                ProjectEdu is in its prototype version, being developed using the React native Framework
+                ProjectEdu está na sua versão protótipo, sendo desenvolvido utilizando a framework React Native.
             </Text>
             <Text style={styles.textInfo}>
-                In its current version, ProjectEdu has the following main features:
+                Na sua versão atual, ProjectEdu tem as seguintes funcionalidades:
             </Text>
 
             <Card>
-                <Card.Title> Activities </Card.Title>
+                <Card.Title> Atividades </Card.Title>
                 <Card.Image source={{uri: 'https://cdn.lynda.com/course/145310/145310-636190593102969217-16x9.jpg'}} />
                 <Text style={styles.cardInfo}>
-                In this area of the app, the learner has access to all the theoretical
-                content of Software Project Management and also to some related activities
-                and practices.
+                    Nessa area do aplicativo, o usuário tem acesso a todo o conteúdo
+                    teórico de Gestão de Projetos de Software, além de algumas atividades
+                    e práticas relacionadas aos tópicos.
                 </Text>
             
             </Card>
@@ -55,12 +57,12 @@ class Info extends React.Component {
                 image={
                     source={uri: 'https://www.siteground.com/blog/wp-content/uploads/2016/06/new-statistics.jpg'}
                 }>*/}
-                <Card.Title>Statistics</Card.Title>
+                <Card.Title> Estatísticas </Card.Title>
                 <Card.Image source={{uri: 'https://www.siteground.com/blog/wp-content/uploads/2016/06/new-statistics.jpg'}} />
                 <Text style={styles.cardInfo}>
-                    This feature allows the learner to check his/her progress since the
-                    user may access his/her score and see how much he/she has learned from
-                    the application through statistical data.   
+                    Essa funcionalidade permite que o usuário verifique seu progresso,
+                    acessando sua pontuação e verificando o quanto foi aprendido na 
+                    aplicação, através de dados estatísticos.
                 </Text>
             </Card>
         
@@ -73,9 +75,9 @@ class Info extends React.Component {
                 <Card.Title>Ranking</Card.Title>
                 <Card.Image source={{uri: 'https://thumbs.jusbr.com/imgs.jusbr.com/publications/images/083ed15e981cd6003e0ba383abf061a2'}} />
                 <Text style={styles.cardInfo}>
-                    This feature allows the learner to compare his/her progress with
-                    others learners by participating in competitions and seeing their ranking
-                    among other users of the application. 
+                    Nessa funcionalidade o usuário consegue comparar sua pontuação com
+                    a de outros usuários. Para obter as pontuações o usuário deve participar
+                    das atividades disponíveis no aplicativo.
                 </Text>
             </Card>
 
@@ -85,34 +87,34 @@ class Info extends React.Component {
                 image={
                     source={uri: 'https://winbusinessin.com/wp-content/uploads/2015/08/settings-copy.png'}
                 }>*/}
-                <Card.Title>Settings</Card.Title>
+                <Card.Title>Configurações</Card.Title>
                 <Card.Image source={{uri: 'https://winbusinessin.com/wp-content/uploads/2015/08/settings-copy.png'}} />
                 <Text style={styles.cardInfo}>
-                    This feature allows the user to set the app preferences concerning
-                    notications, sounds and some system options.
+                    As configurações permitem que o usuário permita notificações,
+                    atualize seu perfil, além de possui explicações sobre o app.
                 </Text>
             </Card>
 
             <Text style={styles.textInfo}>
-                Although some of these features are usual in mobile learning apps, ProjectEdu
-                has been designed considering two artifacts aimed at systematizing the designing
-                of m-learning apps. 
+                Apesar de algumas dessas funcionalidades serem comuns em aplicativos de aprendizado
+                móvel, ProjectEdu foi projetado considerando dois artefatos que visam sistematizar 
+                a criação de aplicativos de Mobile Learning.
             </Text>
             <Text style={styles.textInfo}>
-                We opted for an iterative and incremental development process, with short phases 
-                and proximity to the final target audience, so that the application is well 
-                accepted by them. 
-                In this sense,the features are inserted and tested gradually.
+                O processo de desenvolvimento escolhido foi iterativo e incremental, com fases curtas
+                e proximidade com o público-alvo final, para que a aplicação seja bem aceita por ele.
+                Nesse sentido, as funcionalidades inseridas e testadas gradualmente.
             </Text>
             <Text style={styles.textInfo}>
-                In the current version of ProjectEdu, ReqML-Catalog guided the definition of
-                learning and usability requirements. 
-                Since we want to provide a more attractive approach, it is important to consider
-                user interface and usability aspects to achieve this goal.
+                Na versão atual do ProjectEdu, o ReqML-Catalog guiou a definição dos requisitos
+                de aprendizado e usabilidade.
+                Como o objetivo é fornecer uma abordagem mais atrativa, é importante considerar
+                aspectos como interface de usuário e usabilidade para atingí-lo.
             </Text>
         </View>
        
       </ScrollView>
+        </View>
     );
   }
 }
@@ -124,6 +126,7 @@ const styles = StyleSheet.create({
 
         backgroundColor: '#3b5998',
         alignItems:"center",   
+        paddingBottom: 80
       },
     textInfo:{
         margin:15,

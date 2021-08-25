@@ -20,15 +20,15 @@ export default class Help extends React.Component {
           color: '#fff',
           onPress: () =>  this.props.navigation.goBack(),
           }}
-          centerComponent={{ text: 'ACTIVITIES', style: { color: '#fff' } }}
+          centerComponent={{ text: 'Atividades', style: { color: '#fff' } }}
         />
 
           <Icon 
                 name='work'
                 size = {300}
                 />
-          <Text style={styles.text}>Activities</Text>
-          <Text style={styles.text1}>Content modules and activities</Text>
+          <Text style={styles.text}>Atividades</Text>
+          <Text style={styles.text1}>Módulos de conteúdos e suas respectivas atividades</Text>
         </View>
         <View style={styles.slide2}>
 
@@ -39,14 +39,14 @@ export default class Help extends React.Component {
             color: '#fff',
             onPress: () =>  this.props.navigation.goBack(),
             }}
-            centerComponent={{ text: 'RANKING', style: { color: '#fff' } }}
+            centerComponent={{ text: 'Ranking', style: { color: '#fff' } }}
           />
           <Icon 
                     name='sort'
                     size = {300}
                     />
           <Text style={styles.text}>Ranking</Text>
-          <Text style={styles.text1}>Show the current position in the ranking</Text>
+          <Text style={styles.text1}>Mostra um ranking com as melhores pontuações obtidas</Text>
         </View>
         <View style={styles.slide3}>
 
@@ -57,14 +57,14 @@ export default class Help extends React.Component {
             color: '#fff',
             onPress: () =>  this.props.navigation.goBack(),
             }}
-            centerComponent={{ text: 'STATISTICS', style: { color: '#fff' } }}
+            centerComponent={{ text: 'Estatísticas', style: { color: '#fff' } }}
           />
             <Icon 
               name='graphic-eq' 
               size = {300}
               />
-          <Text style={styles.text}>Statistics</Text>
-          <Text style={styles.text1}>Show the efficiency of each person</Text>
+          <Text style={styles.text}>Estatísticas</Text>
+          <Text style={styles.text1}>Mostra a evolução diária de cada usuário</Text>
         </View>
         <View style={styles.slide4}>
 
@@ -75,14 +75,14 @@ export default class Help extends React.Component {
             color: '#fff',
             onPress: () =>  this.props.navigation.goBack(),
             }}
-            centerComponent={{ text: 'SETTINGS', style: { color: '#fff' } }}
+            centerComponent={{ text: 'Configurações', style: { color: '#fff' } }}
           />
           <Icon 
                   name='settings'
                   size = {300}
                   />
-          <Text style={styles.text}>Settings</Text>
-          <Text style={styles.text1}>Show the main settings</Text>
+          <Text style={styles.text}>Configurações</Text>
+          <Text style={styles.text1}>Mostram as configurações principais do App</Text>
         </View>
       </Swiper>
     );
@@ -126,5 +126,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     justifyContent: 'center',
     alignItems: 'center',
+    marginHorizontal: 20,
+    marginTop: 20
   }
 })
