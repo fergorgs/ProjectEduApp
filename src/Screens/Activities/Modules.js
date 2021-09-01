@@ -119,7 +119,8 @@ function Modules() {
                           type="solid"
                           onPress={() => {
                               navigation.navigate('Topics', {
-                                  mod: mod.id
+                                  mod: mod.id,
+                                  modName: mod.name
                               });
                           }}
                           backgroundColor="#03A9F4"
@@ -129,7 +130,7 @@ function Modules() {
                               marginRight: 0,
                               marginBottom: 0
                           }}
-                          title="View"
+                          title="Visualizar"
                       />
                   </Card.Image>
               </Card>
@@ -183,7 +184,7 @@ function Modules() {
                               marginRight: 0,
                               marginBottom: 0
                           }}
-                          title="Subscribe"
+                          title="Se inscrever"
                       />
                   </Card.Image>
               </Card>
@@ -199,7 +200,7 @@ function Modules() {
                     onPress: () => navigation.openDrawer()
                 }}
                 centerComponent={{
-                    text: 'ACTIVITIES',
+                    text: 'Atividades',
                     style: { color: '#fff' }
                 }}
                 rightComponent={{
@@ -222,7 +223,7 @@ function Modules() {
                     <Button
                         disabled={fetching}
                         onPress={handleSubmit(makeSearch)}
-                        title="Go"
+                        title="Ir"
                     />
                 </View>
 

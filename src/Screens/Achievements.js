@@ -13,78 +13,78 @@ export default class Achievements extends Component {
           data: [
             {
                 id:0,
-                description:"Finished first lesson",
-                name: "Bright Beginning",//Finished first lesson  
+                description:"Terminou o primeiro tópico de estudo",
+                name: "Início Brilhante",//Finished first lesson  
                 image:"https://image.freepik.com/free-vector/illustration-power-button_53876-5834.jpg",
                 status:null
             },
             {   
                 id:1,
-                description:"Finished some exercises from a lesson",  
-                name: "#Respect",//Finished activities part from a lesson 
+                description:"Finalizou um exercício",  
+                name: "#Respeito",//Finished activities part from a lesson 
                 image:"https://image.freepik.com/free-vector/illustration-business-target-icon_53876-5899.jpg",       
                 status:null
             },
             {   
                 id:2,  
-                description:"Finished a module",  
-                name: "Rockstar Rookie",//Finished a module
+                description:"Terminou um módulo",  
+                name: "Novato Rockstar",//Finished a module
                 image:"https://image.freepik.com/free-vector/business-man-holding-job-done-check-sign_3446-560.jpg",       
                 status:null
             },
             {
                 id:3,  
-                description:"Reached 500 points", 
-                name: "Limelight Award",//Reached 500 points - Bronze Medal 
+                description:"Chegou a 500 pontos", 
+                name: "Centro das Atenções",//Reached 500 points - Bronze Medal 
                 image:"https://image.freepik.com/free-vector/bronzed-medal-design_1166-32.jpg", 
                 status:null
             },
             {
                 id:4,  
-                description:"Reached 1000 points",
-                name: "Spotlight Award",//Reached 1000 poinst - Silver Medal
+                description:"Chegou a 1000 pontos",
+                name: "Destaque",//Reached 1000 poinst - Silver Medal
                 image:"https://image.freepik.com/free-vector/silvery-medal-design_1166-23.jpg",    
                 status:null
             },
             {
                 id:5,  
-                description:"Reached 1500 points",
-                name: "Hero Award",//Reached 1500 poinst - Gold Medal   
+                description:"Chegou a 1500 pontos",
+                name: "Herói",//Reached 1500 poinst - Gold Medal   
                 image:"https://image.freepik.com/free-vector/golden-medal-design_1166-34.jpg",        
                 status:null
             },
             {
                 id:6,  
-                description:"Reached 2000 points",
-                name: "Shining Star Award",//Reached 2000 poinst - Bronze Trophy
+                description:"Chegou a 2000 pontos",
+                name: "Estrela Brilhante",//Reached 2000 poinst - Bronze Trophy
                 image:"https://cdn0.iconfinder.com/data/icons/gamification/512/cup_bronze-256.png",        
                 status:null
             },
             {
                 id:7,  
-                description:"Reached 3000 points",
-                name: "Superstar Award",//Reached 3000 poinst - Silver Trophy   
+                description:"Chegou a 3000 pontos",
+                name: "Super Estrela",//Reached 3000 poinst - Silver Trophy   
                 image:"https://cdn2.iconfinder.com/data/icons/gamification/512/cup_silver_kopia-256.png",        
                 status:null
             },
             {
                 id:8,  
-                description:"Reached 4000 points",
-                name: "President’s Award",//Reached 4000 poinst - Gold Trophy   
+                description:"Chegou a 4000 pontos",
+                name: "Presidente",//Reached 4000 poinst - Gold Trophy   
                 image:"https://cdn2.iconfinder.com/data/icons/gamification/512/cup_gold_-_kopia-256.png",        
                 status:null
             },
             {
                 id:9,  
-                description:"Reached 10000 points",
-                name: "Honor Club",//Reached 10000 poinst - Crown Trophy   
+                description:"Chegou a 10000 pontos",
+                name: "Clube de Honra",//Reached 10000 poinst - Crown Trophy   
                 image:"https://cdn0.iconfinder.com/data/icons/gamification-flat-awards-and-badges/500/crown1-256.png",        
                 status:null
             },
             {
                 id:10,  
-                description:"Reached 20000 points",
-                name: "Diamond Club",//Reached 20000 poinst - Diamond Trophy   
+                description:"Chegou a 20000 pontos",
+                name: "Clube de Diamante",//Reached 20000 poinst - Diamond Trophy   
                 image:"https://cdn0.iconfinder.com/data/icons/flat-community-and-achievement-badges/500/diamond-256.png",        
                 status:null
             },
@@ -216,12 +216,12 @@ export default class Achievements extends Component {
                 {this.state.data[this.state.idSelected].description}
                 </Text>
                 <Text style = {{textAlign:"center",fontSize:15,color:"#8395a7"}}>
-                  Status: {this.state.data[this.state.idSelected].status || "Unavailable" }
+                  Estado: {this.state.data[this.state.idSelected].status || "Não conquistado" }
                 </Text>
                 <Button
                     onPress = {() => this.setState({isVisible:false})}
                     buttonStyle={{borderRadius: 20, marginLeft: 20, marginRight: 20, marginTop:100 }}
-                    title='Go Back' 
+                    title='Voltar' 
                 />
                 </View>
             </Modal>
@@ -234,7 +234,7 @@ export default class Achievements extends Component {
             color: '#fff',
             onPress: () => this.props.navigation.openDrawer(),
             }}
-            centerComponent={{ text: 'Achievements', style: { color: '#fff' } }}
+            centerComponent={{ text: 'Conquistas', style: { color: '#fff' } }}
             rightComponent={{ 
               icon: 'portrait', 
               color: '#fff',
@@ -255,9 +255,9 @@ export default class Achievements extends Component {
               <Image style={styles.image} source={{uri: item.image}}/>
               <View style={styles.cardContent}>
                 <Text style={styles.name}>{item.name}</Text>
-                <Text style={styles.count}>Status: {item.status || "Unavailable" }</Text>
+                <Text style={styles.count}>Estado: {item.status || "Não conquistado" }</Text>
                 <TouchableOpacity style={styles.followButton} onPress={()=> this.clickEventListener(item)}>
-                  <Text style={styles.followButtonText}>Explore now</Text>  
+                  <Text style={styles.followButtonText}>Explorar</Text>  
                 </TouchableOpacity>
               </View>
             </TouchableOpacity>

@@ -27,7 +27,7 @@ function Topics() {
     const route = useRoute();
     const [topics, setTopics] = useState(undefined);
 
-    const { mod } = route.params;
+    const { mod, modName } = route.params;
 
     useEffect(() => {
         const fetch = async () => {
@@ -56,7 +56,7 @@ function Topics() {
                     onPress: () => navigation.goBack()
                 }}
                 centerComponent={{
-                    text: 'Test Module',
+                    text: modName,
                     style: { color: '#fff' }
                 }}
             />
