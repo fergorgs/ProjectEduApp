@@ -48,12 +48,11 @@ function Slide({ type, slide, topicName }) {
 
     if (type === 'empty') {
         return (
-            <ScrollView>
+            <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
                 <View style={styles.container}>
                     <Text style={styles.textInfo}>
                         Esse slide não possui conteúdo ainda
                     </Text>
-                    <Text style={styles.textInfo}>{type}</Text>
                 </View>
             </ScrollView>
         );
@@ -61,10 +60,9 @@ function Slide({ type, slide, topicName }) {
 
     if (type === 'begin') {
         return (
-            <ScrollView>
+            <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
                 <View style={styles.container}>
                     <Text style={styles.textInfo}>{topicName}</Text>
-                    <Text style={styles.textInfo}>{type}</Text>
                 </View>
             </ScrollView>
         );
@@ -72,7 +70,7 @@ function Slide({ type, slide, topicName }) {
 
     if (type === 'end') {
         return (
-            <ScrollView>
+            <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
                 <View style={styles.container}>
                     <TouchableHighlight
                         style={[
@@ -106,7 +104,7 @@ function Slide({ type, slide, topicName }) {
         );
     // TODO: display content (video, image & text)
     return (
-        <ScrollView>
+        <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
             <View style={styles.container}>
                 <View style={{ height: 50 }} />
                 {blocks}
@@ -118,8 +116,9 @@ function Slide({ type, slide, topicName }) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flexGrow: 1,
         width: Dimensions.get('window').width,
+        justifyContent: 'center',
         alignItems: 'center'
     },
     textInfo: {
