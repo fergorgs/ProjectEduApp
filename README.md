@@ -1,6 +1,6 @@
 # ProjectEduApp
 
-This is a fork from the ProjectEdu's repository, an app I helped develop during my 1st scientific initiation.
+This is a fork from the ProjectEdu's repository, an app I helped develop during my 1st scientific initiation. See "screenshots" for some in app images.
 
 ### What is ProjectEdu
 ProjectEdu is a mobile learning app designed to teach Project Management (PM) skills. PM competences are of great relevance in today's work environment, 
