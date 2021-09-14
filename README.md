@@ -13,7 +13,7 @@ be in the same classroom.
 My biggest contribution was modularizing the app. At this point in development, the many different components and screens were tightly coupled.
 Furthermore, labels, imagens, videos, content screens and texts were completely hard coded, and the app still had a lot of placeholder content.
 Hence, my job was to modularize the app in a way that content could be expanded and modified more easily. This modularization enabled me to create
-the foundations of the app's dynamic content screen generation system. In a nutshell, everytime the app is started, it fetches theoretical content 
+the foundations of the app's screen dynamic generation system. In a nutshell, everytime the app is started, it fetches theoretical content 
 inputted by the teacher using a backend application, and then it dynamically organizes that content and generates new screens for the student to 
 visualize in the app.
 
